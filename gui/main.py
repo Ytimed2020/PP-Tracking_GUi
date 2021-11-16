@@ -219,7 +219,7 @@ class status():
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def pedestrian_small_object(self):
-        self.page_id = 2
+        self.page_id = 1
         self.universe_for_one_small("pedestrian_small_object.ui",
                                     "pedestrian_small_object_working.ui",
                                     "pedestrian_small_object_working_enter.ui")
@@ -227,13 +227,14 @@ class status():
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def pedestrian_double_photo(self):
-        self.page_id = 3
+        self.page_id = 1
         self.universe_for_double("pedestrian_double_photo.ui"
                                  ,"pedestrian_double_photo_working.ui")
         self.come_back = self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_one_photo(self):
+        self.page_id = 2
         self.universe_for_one_small("car_one_photo.ui",
                                     "car_one_photo_working.ui",
                                     "car_one_photo_working_enter.ui")
@@ -241,6 +242,7 @@ class status():
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_small_object(self):
+        self.page_id = 2
         self.universe_for_one_small("car_small_object.ui",
                                     "car_small_object_working.ui",
                                     "car_small_object_working_enter.ui")
@@ -248,6 +250,7 @@ class status():
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_double_photo(self):
+        self.page_id = 2
         self.universe_for_double("car_double_photo.ui"
                                  ,"car_double_photo_working.ui")
         self.come_back = self.pedestrian_menu
@@ -448,23 +451,37 @@ class status():
         else:
             file_path_name_length = len(file_path_test)
             self.file_name = file_path_test[file_path_name_length - 1]
-        print(self.file_name)
+        # print(self.file_name)
+        self.end_file_name = self.file_name
         # file_name是获取到的文件名，最终获取输出视频点
         # print(self.ui.label_23.width())
         self.ui.label_23.setFixedSize \
             (self.ui.label_23.width(), self.ui.label_23.height())
-        self.ui.label_time.setText(str(datetime.datetime.now()))
+        self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         starttime = datetime.datetime.now()
-        val = os.system(
-            'python deploy/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=test_demo.mp4  --save_images --save_mot_txts --device=GPU')
+        #判断是行人模型还是车辆模型
+        if self.page_id == 1:
+            print("当前是行人模型")
+            print(self.file_name)
+            val = os.system(
+                'python deploy/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU' \
+                % (self.file_name))
+        else:
+            print("当前是车辆模型")
+            val = os.system(
+                'python deploy/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU' \
+                % (self.file_name))
         endtime = datetime.datetime.now()
-        self.ui.label_28.setText(str((starttime - endtime).seconds))
-        print(self.file_name)
+        starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
+        endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
+        self.ui.label_28.setText(str((endtime_count - starttime_count)))
+        # print(self.file_name)
         temp_file_name = self.file_name.split('.')
         self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
         # clip = VideoFileClip(self.ooutput_videos)
 
         self.cap1.release
+        self.frame_count = 0
         self.cap1 = cv2.VideoCapture(self.ooutput_videos)
         self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
         self.video_start()
@@ -476,8 +493,10 @@ class status():
                                    , self.ui.label_progressBar_num)
 
     def read_txt_file(self):
-        f = open('output/' + 'test_demo_flow_statistic.txt', 'r')
-        with open('output/' + 'test_demo_flow_statistic.txt', 'r') as f1:
+        end_file_name_list = self.end_file_name.split('.')
+        self.end_file_name = end_file_name_list[0]
+        f = open('output/' + self.end_file_name +  '_flow_statistic.txt', 'r')
+        with open('output/' + self.end_file_name + '_flow_statistic.txt', 'r') as f1:
             list = f1.readlines()
         current_count_list_y = []
         current_count_list_x = []
@@ -537,6 +556,7 @@ class status():
         self.ui.label_7.setFixedSize\
             (self.ui.label_7.width(), self.ui.label_7.height())
         self.cap1 = cv2.VideoCapture(self.file_path[0])
+        self.frame_count = 0
         self.timer_camera1 = QTimer()
         self.load_video_controller()
         if self.have_show_video==1 and self.is_mult==False:self.load_control_for_one_photo()
@@ -565,7 +585,6 @@ class status():
         # 可以让视频被清除掉，或者一些其他的功能
 
     def video_start(self):
-         self.frame_count = 0
          self.timer_camera1.start(100)
          self.timer_camera1.timeout.connect(self.OpenFrame1)
          if self.have_show_video == 2:
@@ -581,8 +600,8 @@ class status():
         ret, frame = self.cap1.read()
         if ret:
             self.Display_Image(frame, self.ui.label_7)
-            # self.frame_count = self.frame_count + 1
-            # self.ui.label_frames.setText(str( self.frame_count))
+            self.frame_count = self.frame_count + 1
+            self.ui.label_frames.setText(str( self.frame_count))
         else:
             print("播放结束")
             self.cap1.release()

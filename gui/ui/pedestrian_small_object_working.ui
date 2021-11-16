@@ -945,84 +945,12 @@ font-weight:bold;
        <string>-</string>
       </property>
      </widget>
-     <widget class="QWidget" name="widget_7" native="true">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>68</y>
-        <width>139</width>
-        <height>102</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget{
-width: 134px;
-height: 102px;
-background: #F9F9F9;
-border-radius: 8px;
-}</string>
-      </property>
-      <widget class="QLabel" name="label_31">
-       <property name="geometry">
-        <rect>
-         <x>16</x>
-         <y>16</y>
-         <width>121</width>
-         <height>26</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-width: 102px;
-height: 26px;
-font-size: 18px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
-color: #888888;
-line-height: 26px;
-font-weight:bold;
-
-border-radius: 0px;
-border:0px
-}</string>
-       </property>
-       <property name="text">
-        <string>当前时段人流</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_32">
-       <property name="geometry">
-        <rect>
-         <x>16</x>
-         <y>50</y>
-         <width>101</width>
-         <height>36</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-width: 25px;
-height: 36px;
-font-size: 36px;
-font-family: AlibabaPuHuiTi_2_85_Bold;
-color: #333333;
-line-height: 36px;
-font-weight:bold;
-
-border-radius:0px;
-border:0px
-}</string>
-       </property>
-       <property name="text">
-        <string>-</string>
-       </property>
-      </widget>
-     </widget>
      <widget class="QLabel" name="label_33">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>68</y>
-        <width>279</width>
+        <width>431</width>
         <height>180</height>
        </rect>
       </property>
@@ -1164,7 +1092,6 @@ border:0px
      <zorder>label_16</zorder>
      <zorder>label_20</zorder>
      <zorder>label_21</zorder>
-     <zorder>widget_7</zorder>
      <zorder>label_33</zorder>
      <zorder>label_9</zorder>
      <zorder>pushButton_5</zorder>

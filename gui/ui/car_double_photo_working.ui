@@ -362,7 +362,7 @@ font-weight:bold;
 }</string>
      </property>
      <property name="text">
-      <string>阙值调试：</string>
+      <string>阈值调试：</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_12">
