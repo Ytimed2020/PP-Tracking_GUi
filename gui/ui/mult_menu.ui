@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1920</width>
+    <height>1080</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QWidget{
+width: 1920px;
+height: 1080px;
+background: #F9F9F9;
+}</string>
+   </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>161</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+width: 212px;
+height: 112px;
+background: linear-gradient(270deg, #5453FF 0%, #553BD2 100%);
+box-shadow: 0px 0px 20px 0px rgba(109, 80, 249, 0.4);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../firstSource.qrc">:/1/source/first/1.PNG</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>131</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../firstSource.qrc">:/1/source/first/PP.PNG</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1920</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+width: 1920px;
+height: 96px;
+background: #F9F9F9;
+box-shadow: 0px 4px 0px 0px rgba(221, 221, 221, 0.3);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>10</y>
+      <width>671</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+width: 592px;
+height: 52px;
+font-size: 36px;
+font-family: AlibabaPuHuiTi_2_75_SemiBold;
+background: #F9F9F9;
+color: #4E4EF2;
+line-height: 52px;
+font-weight: bold;
+}</string>
+    </property>
+    <property name="text">
+     <string>PP-Tracking 行人/车辆实时跟踪系统</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>168</x>
+      <y>250</y>
+      <width>1584</width>
+      <height>830</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget{
+width: 1584px;
+height: 830px;
+background: #FFFFFF;
+}</string>
+    </property>
+    <widget class="QWidget" name="widget1_2" native="true">
+     <property name="geometry">
+      <rect>
+       <x>412</x>
+       <y>150</y>
+       <width>320</width>
+       <height>378</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget{
+width: 320px;
+height: 378px;
+background: #FFFFFF;
+box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.06);
+border-radius: 12px;
+border: 1px solid rgba(221, 221, 221, 0.3);
+}</string>
+     </property>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>320</width>
+        <height>180</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+background: rgba(255, 155, 0, 51);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>210</y>
+        <width>288</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+width: 280px;
+height: 44px;
+font-size: 14px;
+font-family: AlibabaPuHuiTi_2_55_Regular;
+color: #888888;
+line-height: 22px;
+
+box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.06);
+border-radius: 0px;
+border: 0px solid rgba(221, 221, 221, 0.3);
+font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;单个镜头下的多类别目标实时跟踪&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>294</y>
+        <width>120</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+font-size: 18px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #FFFFFF;	
+line-height: 26px;
+
+width: 120px;
+height: 44px;
+background: #4E4EF2;
+border-radius: 4px;
+font-weight: bold;
+}
+
+QPushButton:hover{
+width: 120px;
+height: 44px;
+background: rgba(78, 78, 242, 204);
+border-radius: 4px;
+opacity: 0.8;
+
+font-size: 18px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #FFFFFF;	
+line-height: 26px;
+font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>选择</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>542</x>
+       <y>92</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+width: 95px;
+height: 36px;
+font-size: 24px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #333333;
+line-height: 36px;
+font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>单镜头跟踪</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>482</x>
+       <y>86</y>
+       <width>48</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../firstSource.qrc">:/1/source/first/icon／单镜头.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QWidget" name="widget1_3" native="true">
+     <property name="geometry">
+      <rect>
+       <x>852</x>
+       <y>150</y>
+       <width>320</width>
+       <height>378</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget{
+width: 320px;
+height: 378px;
+background: #FFFFFF;
+box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.06);
+border-radius: 12px;
+border: 1px solid rgba(221, 221, 221, 0.3);
+}</string>
+     </property>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>320</width>
+        <height>180</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+background: rgba(255, 155, 0, 51);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>210</y>
+        <width>288</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel{
+width: 280px;
+height: 44px;
+font-size: 14px;
+font-family: AlibabaPuHuiTi_2_55_Regular;
+color: #888888;
+line-height: 22px;
+
+box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.06);
+border-radius: 0px;
+border: 0px solid rgba(221, 221, 221, 0.3);
+font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;针对微小多类别目标（小于20pixel）&lt;/p&gt;&lt;p&gt;的实时跟踪&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>294</y>
+        <width>120</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+font-size: 18px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #FFFFFF;	
+line-height: 26px;
+
+width: 120px;
+height: 44px;
+background: #4E4EF2;
+border-radius: 4px;
+font-weight: bold;
+}
+
+QPushButton:hover{
+width: 120px;
+height: 44px;
+background: rgba(78, 78, 242, 204);
+border-radius: 4px;
+opacity: 0.8;
+
+font-size: 18px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #FFFFFF;	
+line-height: 26px;
+font-weight: bold;
+}</string>
+      </property>
+      <property name="text">
+       <string>选择</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="label_16">
+     <property name="geometry">
+      <rect>
+       <x>982</x>
+       <y>92</y>
+       <width>131</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel{
+width: 95px;
+height: 36px;
+font-size: 24px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #333333;
+line-height: 36px;
+font-weight: bold;
+}</string>
+     </property>
+     <property name="text">
+      <string>小目标跟踪</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_17">
+     <property name="geometry">
+      <rect>
+       <x>922</x>
+       <y>86</y>
+       <width>48</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../firstSource.qrc">:/1/source/first/small.PNG</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>168</x>
+      <y>168</y>
+      <width>261</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+width: 189px;
+height: 52px;
+font-size: 48px;
+font-family: AlibabaPuHuiTi_2_55_Regular;
+color: #333333;
+line-height: 52px;
+font-weight:bold;
+}</string>
+    </property>
+    <property name="text">
+     <string>多类别跟踪</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_12">
+    <property name="geometry">
+     <rect>
+      <x>1632</x>
+      <y>178</y>
+      <width>120</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+font-size: 18px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #FFFFFF;	
+line-height: 26px;
+
+width: 120px;
+height: 44px;
+background: #4E4EF2;
+border-radius: 4px;
+font-weight: bold;
+}
+
+QPushButton:hover{
+width: 120px;
+height: 44px;
+background: rgba(78, 78, 242, 204);
+border-radius: 4px;
+opacity: 0.8;
+
+font-size: 18px;
+font-family: AlibabaPuHuiTi_2_65_Medium;
+color: #FFFFFF;	
+line-height: 26px;
+font-weight: bold;
+}</string>
+    </property>
+    <property name="text">
+     <string>返回</string>
+    </property>
+   </widget>
+   <zorder>label_3</zorder>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_4</zorder>
+   <zorder>widget</zorder>
+   <zorder>label_5</zorder>
+   <zorder>pushButton_12</zorder>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../firstSource.qrc"/>
+  <include location="../secondSource.qrc"/>
+ </resources>
+ <connections/>
+</ui>
