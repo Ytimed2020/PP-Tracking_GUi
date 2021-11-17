@@ -52,7 +52,7 @@ class JDE_Detector(Detector):
         trt_calib_mode (bool): If the model is produced by TRT offline quantitative
             calibration, trt_calib_mode need to set True
         cpu_threads (int): cpu threads
-        enable_mkldnn (bool): whether to open MKLDNN
+        enable_mkldnn (bool): whether to open MKLDNN 
     """
 
     def __init__(self,
@@ -248,7 +248,7 @@ def predict_video(detector, camera_id):
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
             cv2.imwrite(
-                os.path.join(save_dir, '{:05d}.png'.format(frame_id)), im)
+                os.path.join(save_dir, '{:05d}.jpg'.format(frame_id)), im)
         else:
             writer.write(im)
 

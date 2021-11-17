@@ -129,8 +129,12 @@ def argsparser():
     parser.add_argument(
         "--secs_interval",
         type=int,
-        default=10,
+        default=2,
         help="The seconds interval to count after tracking")
+    parser.add_argument(
+        "--draw_center_traj",
+        action='store_true',
+        help="Whether drawing the trajectory of center")
     return parser
 
 

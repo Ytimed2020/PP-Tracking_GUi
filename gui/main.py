@@ -146,7 +146,7 @@ class status():
         self.ui.pushButton.clicked.connect(self.pedestrian_menu)
         self.ui.pushButton_2.clicked.connect(self.car_menu)
         self.ui.pushButton_3.clicked.connect(self.mult_menu)
-    def load_son_menu(self,menu_ui):
+    def load_son_menu(self,menu_ui,id):
         # 后面完善的话还要传入那些video和video的一开始的图片
         self.clear_video()
         self.show_ui(menu_ui)
@@ -156,24 +156,39 @@ class status():
                              , self.ui.widget1_3)
         self.help_set_shadow(0, 4, 0, QColor(221, 221, 221, 0.3 * 255), self.ui.label_3)
         test_video = r"C:\Users\Administrator\Desktop\university\d4199e42f744cbe3be7f5ac262cd9056.mp4"
-        label1 = MyMenuVideoLabel("source/second/menu_car.PNG"
-                                  , 360, 400, 320, 180
-                                  , test_video
-                                  , self.ui)
-        label2 = MyMenuVideoLabel("source/second/menu_pedestrian.PNG"
-                                  , 800, 400, 320, 180
-                                  , test_video
-                                  , self.ui)
+        if id ==1:
+            label1 = MyMenuVideoLabel("source/second/people_one.PNG"
+                                      , 360, 400, 320, 180
+                                      , test_video
+                                      , self.ui)
+            label2 = MyMenuVideoLabel("source/second/people_two.PNG"
+                                      , 800, 400, 320, 180
+                                      , test_video
+                                      , self.ui)
 
-        label3 = MyMenuVideoLabel("source/second/menu_muti_object.PNG"
-                                  , 1240, 400, 320, 180
-                                  , test_video
-                                  , self.ui)
+            label3 = MyMenuVideoLabel("source/second/people_small.PNG"
+                                      , 1240, 400, 320, 180
+                                      , test_video
+                                      , self.ui)
+        elif id == 2:
+            label1 = MyMenuVideoLabel("source/second/car_one.PNG"
+                                      , 360, 400, 320, 180
+                                      , test_video
+                                      , self.ui)
+            label2 = MyMenuVideoLabel("source/second/car_two.PNG"
+                                      , 800, 400, 320, 180
+                                      , test_video
+                                      , self.ui)
+
+            label3 = MyMenuVideoLabel("source/second/car_small.PNG"
+                                      , 1240, 400, 320, 180
+                                      , test_video
+                                      , self.ui)
         self.ui.show()
 
     def pedestrian_menu(self):
         self.is_mult = False
-        self.load_son_menu("pedestrian_menu.ui")
+        self.load_son_menu("pedestrian_menu.ui",1)
         self.ui.pushButton.clicked.connect(self.pedestrian_one_photo)
         self.ui.pushButton_2.clicked.connect(self.pedestrian_small_object)
         self.ui.pushButton_3.clicked.connect(self.pedestrian_double_photo)
@@ -181,7 +196,7 @@ class status():
 
     def car_menu(self):
         self.is_mult = False
-        self.load_son_menu("car_menu.ui")
+        self.load_son_menu("car_menu.ui",2)
         self.ui.pushButton_12.clicked.connect(self.handleCalc)
         self.ui.pushButton.clicked.connect(self.car_one_photo)
         self.ui.pushButton_2.clicked.connect(self.car_small_object)
@@ -196,11 +211,11 @@ class status():
                              , self.ui.widget1_3)
         self.help_set_shadow(0, 4, 0, QColor(221, 221, 221, 0.3 * 255), self.ui.label_3)
         test_video = r"C:\Users\Administrator\Desktop\university\d4199e42f744cbe3be7f5ac262cd9056.mp4"
-        label1 = MyMenuVideoLabel("source/second/menu_car.PNG"
+        label1 = MyMenuVideoLabel("source/second/other_one.PNG"
                                   , 580, 400, 320, 180
                                   , test_video
                                   , self.ui)
-        label2 = MyMenuVideoLabel("source/second/menu_pedestrian.PNG"
+        label2 = MyMenuVideoLabel("source/second/other_two.PNG"
                                   , 1020, 400, 320, 180
                                   , test_video
                                   , self.ui)
@@ -215,22 +230,27 @@ class status():
                                     "pedestrian_one_photo_working.ui",
                                     "pedestrian_one_photo_working_enter.ui")
         self.page_id = 1
+        self.ui.label_21.setText("10")
+        self.is_tracking = '--draw_center_traj'
         self.come_back=self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def pedestrian_small_object(self):
-        self.page_id = 1
+        self.page_id = 3
         self.universe_for_one_small("pedestrian_small_object.ui",
                                     "pedestrian_small_object_working.ui",
                                     "pedestrian_small_object_working_enter.ui")
+        self.ui.label_21.setText("10")
+        self.is_tracking = '--draw_center_traj'
         self.come_back = self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def pedestrian_double_photo(self):
-        self.page_id = 1
+        self.page_id = 4
         self.universe_for_double("pedestrian_double_photo.ui"
                                  ,"pedestrian_double_photo_working.ui")
         self.come_back = self.pedestrian_menu
+        self.is_tracking = '--draw_center_traj'
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_one_photo(self):
@@ -238,22 +258,27 @@ class status():
         self.universe_for_one_small("car_one_photo.ui",
                                     "car_one_photo_working.ui",
                                     "car_one_photo_working_enter.ui")
+        self.ui.label_21.setText("10")
+        self.is_tracking = '--draw_center_traj'
         self.come_back=self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_small_object(self):
-        self.page_id = 2
+        self.page_id = 5
         self.universe_for_one_small("car_small_object.ui",
                                     "car_small_object_working.ui",
                                     "car_small_object_working_enter.ui")
+        self.ui.label_21.setText("10")
+        self.is_tracking = '--draw_center_traj'
         self.come_back = self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_double_photo(self):
-        self.page_id = 2
+        self.page_id = 6
         self.universe_for_double("car_double_photo.ui"
                                  ,"car_double_photo_working.ui")
         self.come_back = self.pedestrian_menu
+        self.is_tracking = '--draw_center_traj'
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def universe_for_double(self,first_ui,next_ui):
@@ -261,6 +286,7 @@ class status():
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
         self.have_show_video = 2
+        self.is_tracking = '--draw_center_traj'
         self.ui.pushButton_5.clicked.connect(
             lambda: self.load_video1(self.ui.pushButton_5
                                      , self.ui.label_15)
@@ -281,6 +307,7 @@ class status():
                                ,is_enter_ui):
         self.show_ui(first_ui)
         self.file_path = []
+        self.is_tracking = '--draw_center_traj'
         # 先设置shadow
         self.have_show_video=1
         self.help_set_shadow(0, 4, 0, QColor(221, 221, 221, 0.3 * 255)
@@ -300,6 +327,7 @@ class status():
         self.ui.show()
 
     def mult_one_photo(self):
+        self.is_tracking = '--draw_center_traj'
         self.show_ui("mult_one_photo.ui")
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
@@ -319,6 +347,7 @@ class status():
 
     def mult_small_object(self):
         self.show_ui("mult_small_object.ui")
+        self.is_tracking = '--draw_center_traj'
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
         self.come_back = self.mult_menu
@@ -346,6 +375,8 @@ class status():
         result=[]
         result.append(self.lineEditConfi.text())
         result.append(self.ui.lineEdit_2.text())
+        print(self.ui.lineEdit_2.text())
+
         if self.is_enter==False:
             self.is_enter = True
             self.init_base_ui_for_one_photo_changing_enter(self.is_enter_ui)
@@ -357,6 +388,7 @@ class status():
         self.ui.lineEdit_2.setText(result[1])
         self.load_video_controller()
         self.load_control_for_one_photo()
+        self.read_enter_txt_file()
         return
 
     def init_base_ui_for_double_photo(self,ui_location):
@@ -460,20 +492,33 @@ class status():
         self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         starttime = datetime.datetime.now()
         #判断是行人模型还是车辆模型
+        print("*******************************************************")
+        print(self.confi)
         if self.page_id == 1:
             print("当前是行人模型")
             print(self.file_name)
             val = os.system(
-                'python deploy/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU' \
-                % (self.file_name))
-        else:
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
+                % (self.file_name, self.confi, self.is_tracking))
+        elif self.page_id == 2:
             print("当前是车辆模型")
             val = os.system(
-                'python deploy/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU' \
-                % (self.file_name))
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
+                % (self.file_name, self.confi, self.is_tracking))
+        elif self.page_id == 3:
+            print("当前是行人小目标跟踪模型")
+            val = os.system(
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
+                % (self.file_name, self.confi, self.is_tracking))
+        elif self.page_id == 5:
+            print("当前是车辆小目标跟踪模型")
+            val = os.system(
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
+                % (self.file_name, self.confi, self.is_tracking))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
+        self.final_time = str(endtime_count - starttime_count)
         self.ui.label_28.setText(str((endtime_count - starttime_count)))
         # print(self.file_name)
         temp_file_name = self.file_name.split('.')
@@ -492,6 +537,34 @@ class status():
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
                                    , self.ui.label_progressBar_num)
 
+    def read_enter_txt_file(self):
+        self.ui.label_26.setText(self.final_time)
+        self.ui.label_28.setText(self.current_count)
+        self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        end_file_name_list = self.end_file_name.split('.')
+        self.end_file_name = end_file_name_list[0]
+        f = open('output/' + self.end_file_name + '_flow_statistic.txt', 'r')
+        with open('output/' + self.end_file_name + '_flow_statistic.txt', 'r') as f1:
+            list = f1.readlines()
+        current_count_list_y = []
+        current_count_list_x = []
+        for i in range(len(list)):
+            new_temp_list = list[i].strip('\n').split(' ')
+            current_count = new_temp_list[8]
+            current_count_in = current_count.split(',')
+            current_count_in_true = current_count_in[0]
+            current_count_1 = new_temp_list[11]
+            current_count_out = current_count_1.split(',')
+            current_count_out_true = current_count_out[0]
+            current_count = new_temp_list[len(new_temp_list) - 1]
+            current_count_list_y.append(current_count)
+            current_count_list_x.append(i)
+        self.end_line_enter_one_eidt = int(float(self.lineEditConfi.text()))
+        self.ui.label_32.setText(self.current_count)
+        self.ui.label_34.setText(current_count_in_true)
+        self.ui.label_36.setText(current_count_out_true)
+
+
     def read_txt_file(self):
         end_file_name_list = self.end_file_name.split('.')
         self.end_file_name = end_file_name_list[0]
@@ -500,16 +573,29 @@ class status():
             list = f1.readlines()
         current_count_list_y = []
         current_count_list_x = []
-        for i in range(len(list)):
-            new_temp_list = list[i].strip('\n').split(' ')
+        y_test = []
+        test = int(len(list) / 50) + 1
+        iter = 0
+        for i in range(test):
+            new_temp_list = list[iter - 1].strip('\n').split(' ')
             current_count = new_temp_list[len(new_temp_list) - 1]
+            print(new_temp_list)
+            temp_current_count = current_count.split(',')
+            print(temp_current_count[0])
+            current_count = int(temp_current_count[0])
             current_count_list_y.append(current_count)
             current_count_list_x.append(i)
-        print(current_count_list_y)
-        plt.plot(current_count_list_x,current_count_list_y, color='r', linestyle='-')
-        plt.savefig('test.png')
+            iter = iter + 50
+        for i in range(len(current_count_list_y)):
+            y_test.append(10)
+        plt.plot(current_count_list_x,current_count_list_y, mec='r', mfc='w', label='people')
+        plt.plot(current_count_list_x, y_test, ms=10, label='Boundary')
+        plt.legend()  # 让图例生效
+        plt.margins(0)
+        plt.subplots_adjust(bottom=0.10)
+        plt.savefig('people_image.png')
         plt.show()
-        pic = QPixmap('test.png')
+        pic = QPixmap('people_image.png')
         self.ui.label_33.setPixmap(pic)
         self.ui.label_33.setScaledContents(True)
         # 当前的人数计数
@@ -518,8 +604,6 @@ class status():
         f.close()
         frames_num = self.cap1.get(7)
         fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
-        print(fps)
-        print(frames_num)
 
     def synthesis_vide(self, val, video_name):
         video_name_list = video_name.split('.')
@@ -575,6 +659,10 @@ class status():
         self.ui.pushButton.clicked.connect(self.video_start)
         self.ui.pushButton_2.clicked.connect(self.video_pause)
         self.ui.pushButton_3.clicked.connect(self.video_stop)
+        self.ui.pushButton_4.clicked.connect(self.tracking_is)
+
+    def tracking_is(self):
+        self.is_tracking = 'False'
 
     def video_stop(self):
         self.timer_camera1.stop()

@@ -144,9 +144,9 @@ class MyMenuVideoLabel(QLabel):
         self.resize(w,h)
         self.raise_()
         self.setFixedSize(self.width(),self.height())
-        self.control=MyMenuVideoControl(x+140,y+70,40,40,self,video,parent)
-        self.yellow_label=MyMenuVideoYellowLabel(x,y,w,h,self.control,parent)
-        self.control.raise_()
+        # self.control=MyMenuVideoControl(x+140,y+70,40,40,self,video,parent)
+        # self.yellow_label=MyMenuVideoYellowLabel(x,y,w,h,self.control,parent)
+        # self.control.raise_()
 
 
     def enterEvent(self, event):

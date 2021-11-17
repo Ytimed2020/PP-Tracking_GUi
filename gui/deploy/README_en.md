@@ -43,11 +43,11 @@ For details on model export, please refer to the documentation [Tutorial on Padd
 
 ### 2.2 Predictions are made using Paddle Serving
 * [Install PaddleServing](https://github.com/PaddlePaddle/Serving/blob/develop/README.md#installation)
-* [Use PaddleServing](serving/README.md)
+* [Use PaddleServing](./serving/README.md)
 
 
 ## 3. PaddleLite Deployment
-- [Deploy the PaddleDetection model using PaddleLite](lite/README.md)
+- [Deploy the PaddleDetection model using PaddleLite](./lite/README.md)
 - For details, please refer to [Paddle-Lite-Demo](https://github.com/PaddlePaddle/Paddle-Lite-Demo) deployment. For more information, please refer to [Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite)
 
 

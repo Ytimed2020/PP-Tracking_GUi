@@ -1028,54 +1028,6 @@ border: 0px solid rgba(221, 221, 221, 0.3);
        <string/>
       </property>
      </widget>
-     <widget class="QLabel" name="label_20">
-      <property name="geometry">
-       <rect>
-        <x>250</x>
-        <y>284</y>
-        <width>131</width>
-        <height>26</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel{
-width: 111px;
-height: 26px;
-font-size: 18px;
-font-family: AlibabaPuHuiTi_2_55_Regular;
-color: #333333;
-line-height: 26px;
-font-weight:bold;
-border-radius: 0px;
-border: 0px solid rgba(221, 221, 221, 0.3);
-}</string>
-      </property>
-      <property name="text">
-       <string>人流密度标准：</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_21">
-      <property name="geometry">
-       <rect>
-        <x>374</x>
-        <y>274</y>
-        <width>80</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QLabel{
-width: 80px;
-height: 40px;
-background: #F5F5F5;
-border-radius: 4px;
-border: 1px solid #CCCCCC;
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_33">
       <property name="geometry">
        <rect>
@@ -1105,8 +1057,6 @@ border-radius: 8px;
      <zorder>label_19</zorder>
      <zorder>pushButton_11</zorder>
      <zorder>label_18</zorder>
-     <zorder>label_20</zorder>
-     <zorder>label_21</zorder>
      <zorder>label_33</zorder>
     </widget>
     <widget class="QLabel" name="label_22">

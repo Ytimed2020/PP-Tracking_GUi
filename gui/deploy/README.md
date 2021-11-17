@@ -43,11 +43,11 @@ python tools/export_model.py -c configs/yolov3/yolov3_mobilenet_v1_roadsign.yml 
 
 ### 2.2 使用PaddleServing进行预测
 * [安装PaddleServing](https://github.com/PaddlePaddle/Serving/blob/develop/README.md#installation)
-* [使用PaddleServing](serving/README.md)
+* [使用PaddleServing](./serving/README.md)
 
 
 ## 3.PaddleLite部署
-- [使用PaddleLite部署PaddleDetection模型](lite/README.md)
+- [使用PaddleLite部署PaddleDetection模型](./lite/README.md)
 - 详细案例请参考[Paddle-Lite-Demo](https://github.com/PaddlePaddle/Paddle-Lite-Demo)部署。更多内容，请参考[Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite)
 
 
