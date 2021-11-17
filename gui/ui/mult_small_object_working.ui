@@ -835,6 +835,19 @@ line-height: 36px;
        <string>数据监测</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>190</y>
+        <width>301</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="label_txt_tip">
@@ -862,7 +875,7 @@ padding:10px
 }</string>
     </property>
     <property name="text">
-     <string>导出txt文件释义：内容内容内容内容内容内容内容内容内容内容内容内容内容内容</string>
+     <string>导出地址为output目录下_flow_statistic后缀txt中</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

@@ -230,7 +230,6 @@ class status():
                                     "pedestrian_one_photo_working.ui",
                                     "pedestrian_one_photo_working_enter.ui")
         self.page_id = 1
-        self.ui.label_21.setText("10")
         self.is_tracking = '--draw_center_traj'
         self.come_back=self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
@@ -240,7 +239,6 @@ class status():
         self.universe_for_one_small("pedestrian_small_object.ui",
                                     "pedestrian_small_object_working.ui",
                                     "pedestrian_small_object_working_enter.ui")
-        self.ui.label_21.setText("10")
         self.is_tracking = '--draw_center_traj'
         self.come_back = self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
@@ -258,7 +256,6 @@ class status():
         self.universe_for_one_small("car_one_photo.ui",
                                     "car_one_photo_working.ui",
                                     "car_one_photo_working_enter.ui")
-        self.ui.label_21.setText("10")
         self.is_tracking = '--draw_center_traj'
         self.come_back=self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
@@ -268,7 +265,6 @@ class status():
         self.universe_for_one_small("car_small_object.ui",
                                     "car_small_object_working.ui",
                                     "car_small_object_working_enter.ui")
-        self.ui.label_21.setText("10")
         self.is_tracking = '--draw_center_traj'
         self.come_back = self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
@@ -327,6 +323,7 @@ class status():
         self.ui.show()
 
     def mult_one_photo(self):
+        self.page_id = 7
         self.is_tracking = '--draw_center_traj'
         self.show_ui("mult_one_photo.ui")
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
@@ -346,6 +343,7 @@ class status():
 
 
     def mult_small_object(self):
+        self.page_id = 8
         self.show_ui("mult_small_object.ui")
         self.is_tracking = '--draw_center_traj'
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
@@ -469,8 +467,12 @@ class status():
         else:
             self.init_base_ui_for_double_photo(self.not_enter_ui)
         # 一开始是没有打开
-        t1 = threading.Thread(target=self.load_model)  # 这段代码的意思是我开一个线程，去并发运行
-        t1.start()
+        if self.page_id == 6 or self.page_id == 7:
+            t1 = threading.Thread(target=self.load_model_mult)  # 这段代码的意思是我开一个线程，去并发运行
+            t1.start()
+        else :
+            t1 = threading.Thread(target=self.load_model)  # 这段代码的意思是我开一个线程，去并发运行
+            t1.start()
         # file_temp_split_path = self.file_path[0].split('.')
         # self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
         # print(self.file_path[0])
@@ -515,6 +517,10 @@ class status():
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
                 % (self.file_name, self.confi, self.is_tracking))
+        else:
+            val = os.system(
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
+                % (self.file_name, self.confi, self.is_tracking))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
@@ -532,6 +538,51 @@ class status():
         self.video_start()
         self.synthesis_vide(val, self.file_name)
         self.read_txt_file()
+        for i in range(101):
+            self.progressPos = i / 100
+            self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
+                                   , self.ui.label_progressBar_num)
+
+    def load_model_mult(self):
+        file_path_test = self.file_path[0].split('/')
+        if len(file_path_test) == 0:
+            self.file_name = file_path_test
+        else:
+            file_path_name_length = len(file_path_test)
+            self.file_name = file_path_test[file_path_name_length - 1]
+        # print(self.file_name)
+        self.end_file_name = self.file_name
+        # file_name是获取到的文件名，最终获取输出视频点
+        # print(self.ui.label_23.width())
+        self.ui.label_23.setFixedSize \
+            (self.ui.label_23.width(), self.ui.label_23.height())
+        self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        starttime = datetime.datetime.now()
+        # 判断是行人模型还是车辆模型
+        print("*******************************************************")
+        print(self.confi)
+        val = os.system(
+            'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
+            % (self.file_name, self.confi, self.is_tracking))
+        endtime = datetime.datetime.now()
+        starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
+        endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
+        self.final_time = str(endtime_count - starttime_count)
+        # self.ui.label_28.setText(str((endtime_count - starttime_count)))
+        self.ui.label_17.setText("运行时间" + str((endtime_count - starttime_count))/
+                                 +"运行FPS" + str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        # print(self.file_name)
+        temp_file_name = self.file_name.split('.')
+        self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
+        # clip = VideoFileClip(self.ooutput_videos)
+
+        self.cap1.release
+        self.frame_count = 0
+        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
+        # self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        self.video_start()
+        self.synthesis_vide(val, self.file_name)
+        self.read_txt_file_mult()
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
@@ -564,6 +615,45 @@ class status():
         self.ui.label_34.setText(current_count_in_true)
         self.ui.label_36.setText(current_count_out_true)
 
+
+    def read_txt_file_mult(self):
+        end_file_name_list = self.end_file_name.split('.')
+        self.end_file_name = end_file_name_list[0]
+        f = open('output/' + self.end_file_name +  '_flow_statistic.txt', 'r')
+        with open('output/' + self.end_file_name + '_flow_statistic.txt', 'r') as f1:
+            list = f1.readlines()
+        current_count_list_y = []
+        current_count_list_x = []
+        y_test = []
+        test = int(len(list) / 50) + 1
+        iter = 0
+        for i in range(test):
+            new_temp_list = list[iter - 1].strip('\n').split(' ')
+            current_count = new_temp_list[len(new_temp_list) - 1]
+            print(new_temp_list)
+            temp_current_count = current_count.split(',')
+            print(temp_current_count[0])
+            current_count = int(temp_current_count[0])
+            current_count_list_y.append(current_count)
+            current_count_list_x.append(i)
+            iter = iter + 50
+        for i in range(len(current_count_list_y)):
+            y_test.append(10)
+        plt.plot(current_count_list_x,current_count_list_y, mec='r', mfc='w', label='people')
+        plt.plot(current_count_list_x, y_test, ms=10, label='Boundary')
+        plt.legend()  # 让图例生效
+        plt.margins(0)
+        plt.subplots_adjust(bottom=0.10)
+        plt.savefig('people_image.png')
+        plt.show()
+        pic = QPixmap('people_image.png')
+        self.ui.label_9.setPixmap(pic)
+        self.ui.label_9.setScaledContents(True)
+        # 当前的人数计数
+        self.current_count = current_count_list_y[len(current_count_list_y) - 1]
+        f.close()
+        frames_num = self.cap1.get(7)
+        fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
 
     def read_txt_file(self):
         end_file_name_list = self.end_file_name.split('.')
