@@ -161,12 +161,12 @@ class status():
                                       , 360, 400, 320, 180
                                       , test_video
                                       , self.ui)
-            label2 = MyMenuVideoLabel("source/second/people_two.PNG"
+            label2 = MyMenuVideoLabel("source/second/people_small.PNG"
                                       , 800, 400, 320, 180
                                       , test_video
                                       , self.ui)
 
-            label3 = MyMenuVideoLabel("source/second/people_small.PNG"
+            label3 = MyMenuVideoLabel("source/second/people_two.PNG"
                                       , 1240, 400, 320, 180
                                       , test_video
                                       , self.ui)
@@ -384,9 +384,9 @@ class status():
 
         self.lineEditConfi.setText(result[0])
         self.ui.lineEdit_2.setText(result[1])
+        self.read_enter_txt_file()
         self.load_video_controller()
         self.load_control_for_one_photo()
-        self.read_enter_txt_file()
         return
 
     def init_base_ui_for_double_photo(self,ui_location):
@@ -530,18 +530,20 @@ class status():
         temp_file_name = self.file_name.split('.')
         self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
         # clip = VideoFileClip(self.ooutput_videos)
-
-        self.cap1.release
-        self.frame_count = 0
-        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
-        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        self.video_start()
         self.synthesis_vide(val, self.file_name)
         self.read_txt_file()
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
                                    , self.ui.label_progressBar_num)
+        self.timer_camera1.stop()
+        self.cap1.release()
+        self.cap1 = None
+        self.frame_count = 0
+        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
+        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        self.video_start()
+        self.load_video_controller()
 
     def load_model_mult(self):
         file_path_test = self.file_path[0].split('/')
@@ -569,28 +571,37 @@ class status():
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
         self.final_time = str(endtime_count - starttime_count)
         # self.ui.label_28.setText(str((endtime_count - starttime_count)))
-        self.ui.label_17.setText("运行时间" + str((endtime_count - starttime_count))/
-                                 +"运行FPS" + str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+
         # print(self.file_name)
         temp_file_name = self.file_name.split('.')
         self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
         # clip = VideoFileClip(self.ooutput_videos)
 
-        self.cap1.release
-        self.frame_count = 0
-        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
-        # self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        self.video_start()
+        # self.cap1.release()
+        # self.frame_count = 0
+        # self.cap1 = cv2.VideoCapture(self.ooutput_videos)
+        # self.load_video_controller()
+        # # self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        # self.video_start()
         self.synthesis_vide(val, self.file_name)
         self.read_txt_file_mult()
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
                                    , self.ui.label_progressBar_num)
+        self.timer_camera1.stop()
+        self.cap1.release()
+        self.cap1 = None
+        self.frame_count = 0
+        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
+        self.ui.label_17.setText("运行时间" + str((endtime_count - starttime_count)) /
+                                 +"运行FPS" + str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        self.video_start()
+        self.load_video_controller()
 
     def read_enter_txt_file(self):
-        self.ui.label_26.setText(self.final_time)
-        self.ui.label_28.setText(self.current_count)
+        self.ui.label_26.setText(str(self.final_time))
+        self.ui.label_28.setText(str(self.current_count))
         self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         end_file_name_list = self.end_file_name.split('.')
         self.end_file_name = end_file_name_list[0]
@@ -611,9 +622,10 @@ class status():
             current_count_list_y.append(current_count)
             current_count_list_x.append(i)
         self.end_line_enter_one_eidt = int(float(self.lineEditConfi.text()))
-        self.ui.label_32.setText(self.current_count)
-        self.ui.label_34.setText(current_count_in_true)
-        self.ui.label_36.setText(current_count_out_true)
+        print(self.current_count)
+        self.ui.label_32.setText(str(self.current_count))
+        self.ui.label_34.setText(str(current_count_in_true))
+        self.ui.label_36.setText(str(current_count_out_true))
 
 
     def read_txt_file_mult(self):
@@ -690,7 +702,7 @@ class status():
         self.ui.label_33.setScaledContents(True)
         # 当前的人数计数
         self.current_count = current_count_list_y[len(current_count_list_y) - 1]
-        self.ui.label_30.setText(self.current_count)
+        self.ui.label_30.setText(str(self.current_count))
         f.close()
         frames_num = self.cap1.get(7)
         fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
@@ -700,7 +712,7 @@ class status():
         video_name = video_name_list[0]
         if val == 0:
             self.img_root = 'output/' + video_name + '/'
-            fps = 15
+            fps = 13
             test_size = self.img_root + "00000.png"
             file_size_path = Image.open(test_size)
             img = file_size_path.size  # 获取文件尺寸
@@ -763,7 +775,7 @@ class status():
         # 可以让视频被清除掉，或者一些其他的功能
 
     def video_start(self):
-         self.timer_camera1.start(100)
+         self.timer_camera1.start(120)
          self.timer_camera1.timeout.connect(self.OpenFrame1)
          if self.have_show_video == 2:
              self.timer_camera2.start(100)
