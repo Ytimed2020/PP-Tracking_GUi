@@ -150,7 +150,8 @@ class MyMenuVideoLabel(QLabel):
 
 
     def enterEvent(self, event):
-        self.yellow_label.setVisible(True)
+        # self.yellow_label.setVisible(True)
+        i = 1
 
 class double_photo_show_label(QLabel):
     def __init__(self,parent,type,info,x,y,w,h):

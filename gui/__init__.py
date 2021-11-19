@@ -19,36 +19,36 @@ if __name__ == '__main__':
     # print(current_count_list_y)
     from matplotlib import pyplot
 
-    f = open('output/'  + 'test_demo_flow_statistic.txt', 'r')
-    with open('output/'+ 'test_demo_flow_statistic.txt', 'r') as f1:
-        list = f1.readlines()
-    import matplotlib.pyplot as plt
-    current_count_list_y = []
-    current_count_list_x = []
-    y_test = []
-    test = int(len(list) / 50) + 1
-    iter = 0
-    for i in range(test):
-        new_temp_list = list[iter - 1].strip('\n').split(' ')
-        current_count = new_temp_list[len(new_temp_list) - 1]
-        print(new_temp_list)
-        temp_current_count = current_count.split(',')
-        print(temp_current_count[0])
-        current_count = int(temp_current_count[0])
-        current_count_list_y.append(current_count)
-        current_count_list_x.append(i)
-        iter = iter + 50
-    for i in range(len(current_count_list_y)):
-        y_test.append(10)
-    print(current_count_list_y)
-    print(y_test)
-    plt.plot(current_count_list_x, current_count_list_y, mec='r', mfc='w', label='people')
-    plt.plot(current_count_list_x, y_test, ms=10, label='Boundary')
-    plt.legend()  # 让图例生效
-    plt.margins(0)
-    plt.subplots_adjust(bottom=0.10)
-    plt.savefig('people_image.png')
-    plt.show()
+    # f = open('output/'  + 'test_demo_flow_statistic.txt', 'r')
+    # with open('output/'+ 'test_demo_flow_statistic.txt', 'r') as f1:
+    #     list = f1.readlines()
+    # import matplotlib.pyplot as plt
+    # current_count_list_y = []
+    # current_count_list_x = []
+    # y_test = []
+    # test = int(len(list) / 50) + 1
+    # iter = 0
+    # for i in range(test):
+    #     new_temp_list = list[iter - 1].strip('\n').split(' ')
+    #     current_count = new_temp_list[len(new_temp_list) - 1]
+    #     print(new_temp_list)
+    #     temp_current_count = current_count.split(',')
+    #     print(temp_current_count[0])
+    #     current_count = int(temp_current_count[0])
+    #     current_count_list_y.append(current_count)
+    #     current_count_list_x.append(i)
+    #     iter = iter + 50
+    # for i in range(len(current_count_list_y)):
+    #     y_test.append(10)
+    # print(current_count_list_y)
+    # print(y_test)
+    # plt.plot(current_count_list_x, current_count_list_y, mec='r', mfc='w', label='people')
+    # plt.plot(current_count_list_x, y_test, ms=10, label='Boundary')
+    # plt.legend()  # 让图例生效
+    # plt.margins(0)
+    # plt.subplots_adjust(bottom=0.10)
+    # plt.savefig('people_image.png')
+    # plt.show()
     # f.close()
     # cap = cv2.VideoCapture('test_demo.mp4')
     # ret, frame = cap.read()

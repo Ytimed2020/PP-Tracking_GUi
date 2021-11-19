@@ -199,7 +199,7 @@ font-weight:bold
 }</string>
      </property>
      <property name="text">
-      <string>开始运行</string>
+      <string>模型运行</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_2">
@@ -226,7 +226,7 @@ font-weight:bold
 }</string>
      </property>
      <property name="text">
-      <string>暂停运行</string>
+      <string>结果显示</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_3">
@@ -634,9 +634,9 @@ font-weight:bold;
      <property name="geometry">
       <rect>
        <x>1050</x>
-       <y>108</y>
+       <y>107</y>
        <width>474</width>
-       <height>540</height>
+       <height>541</height>
       </rect>
      </property>
      <widget class="QLabel" name="label_17">
@@ -666,8 +666,8 @@ line-height: 36px;
      <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>135</x>
-        <y>192</y>
+        <x>180</x>
+        <y>190</y>
         <width>100</width>
         <height>114</height>
        </rect>
@@ -685,8 +685,8 @@ line-height: 36px;
      <widget class="QLabel" name="label_19">
       <property name="geometry">
        <rect>
-        <x>141</x>
-        <y>322</y>
+        <x>190</x>
+        <y>320</y>
         <width>100</width>
         <height>26</height>
        </rect>

@@ -202,7 +202,7 @@ font-weight:bold
 }</string>
      </property>
      <property name="text">
-      <string>开始运行</string>
+      <string>模型运行</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_2">
@@ -256,7 +256,7 @@ font-weight: bold;
 }</string>
      </property>
      <property name="text">
-      <string>暂停运行</string>
+      <string>结果显示</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_3">
@@ -793,12 +793,12 @@ line-height: 36px;
 width: 120px;
 height: 40px;
 border-radius: 4px;
-border: 1px solid #4E4EF2;
+border: 1px solid ;
 font-weight:bold;
 
 font-size: 16px;
 font-family: AlibabaPuHuiTi_2_65_Medium;
-color: #4E4EF2;
+
 line-height: 24px;
 }
 QPushButton:hover{
@@ -810,8 +810,8 @@ border: 1px solid rgba(78, 78, 242, 204);
 
 font-weight:bold;
 font-size: 16px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
 color: rgba(78, 78, 242, 204);
+font-family: AlibabaPuHuiTi_2_65_Medium;
 line-height: 24px;
 }</string>
       </property>
@@ -1467,7 +1467,7 @@ padding:10px
 }</string>
      </property>
      <property name="text">
-      <string>阙值调试释义：内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</string>
+      <string>请在导入视频前调试阈值；阈值默认值：0.5 </string>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

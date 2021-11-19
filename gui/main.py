@@ -12,7 +12,7 @@ import datetime
 import firstSource
 import matplotlib.pyplot as plt
 import secondSource
-
+from PySide2.QtGui import QMovie
 import sys
 sys.path.append('deploy')
 
@@ -115,7 +115,8 @@ class status():
     def handleCalc(self):
         self.show_ui("main_menu.ui")
         self.have_show_video = 0
-
+        self.is_tracking = '--draw_center_traj'
+        self.is_enter_surely = 0
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget1
                              , self.ui.widget1_2
@@ -230,7 +231,7 @@ class status():
                                     "pedestrian_one_photo_working.ui",
                                     "pedestrian_one_photo_working_enter.ui")
         self.page_id = 1
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         self.come_back=self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
@@ -239,7 +240,7 @@ class status():
         self.universe_for_one_small("pedestrian_small_object.ui",
                                     "pedestrian_small_object_working.ui",
                                     "pedestrian_small_object_working_enter.ui")
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         self.come_back = self.pedestrian_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
@@ -248,7 +249,7 @@ class status():
         self.universe_for_double("pedestrian_double_photo.ui"
                                  ,"pedestrian_double_photo_working.ui")
         self.come_back = self.pedestrian_menu
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_one_photo(self):
@@ -256,8 +257,8 @@ class status():
         self.universe_for_one_small("car_one_photo.ui",
                                     "car_one_photo_working.ui",
                                     "car_one_photo_working_enter.ui")
-        self.is_tracking = '--draw_center_traj'
-        self.come_back=self.pedestrian_menu
+        self.is_draw_line = ''
+        self.come_back=self.car_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_small_object(self):
@@ -265,16 +266,16 @@ class status():
         self.universe_for_one_small("car_small_object.ui",
                                     "car_small_object_working.ui",
                                     "car_small_object_working_enter.ui")
-        self.is_tracking = '--draw_center_traj'
-        self.come_back = self.pedestrian_menu
+        self.is_draw_line = ''
+        self.come_back = self.car_menu
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def car_double_photo(self):
         self.page_id = 6
         self.universe_for_double("car_double_photo.ui"
                                  ,"car_double_photo_working.ui")
-        self.come_back = self.pedestrian_menu
-        self.is_tracking = '--draw_center_traj'
+        self.come_back = self.car_menu
+        self.is_draw_line = ''
         self.ui.pushButton_13.clicked.connect(self.come_back)
 
     def universe_for_double(self,first_ui,next_ui):
@@ -282,7 +283,7 @@ class status():
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
         self.have_show_video = 2
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         self.ui.pushButton_5.clicked.connect(
             lambda: self.load_video1(self.ui.pushButton_5
                                      , self.ui.label_15)
@@ -303,7 +304,7 @@ class status():
                                ,is_enter_ui):
         self.show_ui(first_ui)
         self.file_path = []
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         # 先设置shadow
         self.have_show_video=1
         self.help_set_shadow(0, 4, 0, QColor(221, 221, 221, 0.3 * 255)
@@ -324,7 +325,7 @@ class status():
 
     def mult_one_photo(self):
         self.page_id = 7
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         self.show_ui("mult_one_photo.ui")
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
@@ -345,7 +346,7 @@ class status():
     def mult_small_object(self):
         self.page_id = 8
         self.show_ui("mult_small_object.ui")
-        self.is_tracking = '--draw_center_traj'
+        self.is_draw_line = ''
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
         self.come_back = self.mult_menu
@@ -374,17 +375,20 @@ class status():
         result.append(self.lineEditConfi.text())
         result.append(self.ui.lineEdit_2.text())
         print(self.ui.lineEdit_2.text())
-
+        print("*****************************************************77777")
+        self.is_draw_line = '--do_entrance_counting'
         if self.is_enter==False:
             self.is_enter = True
             self.init_base_ui_for_one_photo_changing_enter(self.is_enter_ui)
         else:
             self.is_enter = False
             self.init_base_ui_for_one_photo_changing_enter(self.not_enter_ui)
-
         self.lineEditConfi.setText(result[0])
         self.ui.lineEdit_2.setText(result[1])
-        self.read_enter_txt_file()
+        pic = QPixmap('source/second/loading.png')
+        self.ui.label_7.setPixmap(pic)
+        self.ui.label_7.setScaledContents(True)
+        self.is_enter_surely = 1
         self.load_video_controller()
         self.load_control_for_one_photo()
         return
@@ -411,7 +415,6 @@ class status():
         self.ui.show()
 
     def init_base_ui_for_one_photo_changing_enter(self,ui_location):
-
         self.show_ui(ui_location)
         s = """QLineEdit{\nwidth: 80px;\nheight: 40px;\nbackground: #FFFFFF;\nborder-radius: 4px;\nborder: 1px solid #CCCCCC;\n\nfont-size: 18px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: #333333;\nline-height: 26px;\nfont-weight:bold;\n}"""
         self.lineEditConfi = MyLineEdit(self.ui.label_confi_tip, s
@@ -467,26 +470,43 @@ class status():
         else:
             self.init_base_ui_for_double_photo(self.not_enter_ui)
         # 一开始是没有打开
-        if self.page_id == 6 or self.page_id == 7:
-            t1 = threading.Thread(target=self.load_model_mult)  # 这段代码的意思是我开一个线程，去并发运行
-            t1.start()
-        else :
-            t1 = threading.Thread(target=self.load_model)  # 这段代码的意思是我开一个线程，去并发运行
-            t1.start()
-        # file_temp_split_path = self.file_path[0].split('.')
-        # self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
-        # print(self.file_path[0])
+        file_temp_split_path = self.file_path[0].split('.')
+        self.file_name = file_temp_split_path[0]
+        self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
+        print(self.file_path[0])
+        pic = QPixmap('source/second/loading.png')
+        self.ui.label_7.setPixmap(pic)
+        self.ui.label_7.setScaledContents(True)
+        if self.page_id == 7:
+            pic = QPixmap('source/second/mul_one.png')
+            self.ui.label_9.setPixmap(pic)
+            self.ui.label_9.setScaledContents(True)
+        elif self.page_id == 8:
+            pic = QPixmap('gui/source/second/small_mul.png')
+            self.ui.label_9.setPixmap(pic)
+            self.ui.label_9.setScaledContents(True)
         self.open_video()
+        # self.open_video()
 
     def load_model(self):
+        # pic = QPixmap('people_image.png')
+        # self.ui.label_7.setPixmap(pic)
+        # self.ui.label_7.setScaledContents(True)
+        print(self.file_name)
+        file_name_test = self.file_name.split('/')
         file_path_test = self.file_path[0].split('/')
-        if len(file_path_test) == 0:
-            self.file_name = file_path_test
-        else:
-            file_path_name_length = len(file_path_test)
-            self.file_name = file_path_test[file_path_name_length - 1]
-        # print(self.file_name)
+        file_name_test_start = file_name_test[len(file_name_test) - 1]
+        # if len(file_path_test) == 0:
+        #     self.file_name = file_path_test
+        # else:
+        #     file_path_name_length = len(file_path_test)
+        #     self.file_name = file_path_test[file_path_name_length - 1]
+        # # print(self.file_name)
+        self.file_name = file_name_test_start + '.mp4'
         self.end_file_name = self.file_name
+        # temp_file_name = self.file_name.split('.')
+        # self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
+        # self.file_path[0] = self.ooutput_videos
         # file_name是获取到的文件名，最终获取输出视频点
         # print(self.ui.label_23.width())
         self.ui.label_23.setFixedSize \
@@ -496,54 +516,56 @@ class status():
         #判断是行人模型还是车辆模型
         print("*******************************************************")
         print(self.confi)
+        # draw_center_traj
+        print(self.is_draw_line)
+        print(self.is_tracking)
+        print("lzclzclzclzclzclzc")
         if self.page_id == 1:
             print("当前是行人模型")
             print(self.file_name)
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-                % (self.file_name, self.confi, self.is_tracking))
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 2:
             print("当前是车辆模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-                % (self.file_name, self.confi, self.is_tracking))
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 3:
             print("当前是行人小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-                % (self.file_name, self.confi, self.is_tracking))
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 5:
             print("当前是车辆小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-                % (self.file_name, self.confi, self.is_tracking))
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         else:
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-                % (self.file_name, self.confi, self.is_tracking))
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s --draw_center_traj %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
         self.final_time = str(endtime_count - starttime_count)
         self.ui.label_28.setText(str((endtime_count - starttime_count)))
-        # print(self.file_name)
-        temp_file_name = self.file_name.split('.')
-        self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
-        # clip = VideoFileClip(self.ooutput_videos)
+
+
         self.synthesis_vide(val, self.file_name)
-        self.read_txt_file()
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
                                    , self.ui.label_progressBar_num)
-        self.timer_camera1.stop()
-        self.cap1.release()
-        self.cap1 = None
-        self.frame_count = 0
-        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
+
+        if self.is_enter_surely == 0:
+            self.read_txt_file()
+        else:
+            self.read_enter_txt_file()
         self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        self.video_start()
-        self.load_video_controller()
+        # self.video_start()
+        # self.load_video_controller()
+
 
     def load_model_mult(self):
         file_path_test = self.file_path[0].split('/')
@@ -565,7 +587,7 @@ class status():
         print(self.confi)
         val = os.system(
             'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-            % (self.file_name, self.confi, self.is_tracking))
+            % (self.file_name, self.confi, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
@@ -601,7 +623,6 @@ class status():
 
     def read_enter_txt_file(self):
         self.ui.label_26.setText(str(self.final_time))
-        self.ui.label_28.setText(str(self.current_count))
         self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         end_file_name_list = self.end_file_name.split('.')
         self.end_file_name = end_file_name_list[0]
@@ -612,10 +633,14 @@ class status():
         current_count_list_x = []
         for i in range(len(list)):
             new_temp_list = list[i].strip('\n').split(' ')
+            print(new_temp_list)
             current_count = new_temp_list[8]
+            print(current_count)
             current_count_in = current_count.split(',')
             current_count_in_true = current_count_in[0]
             current_count_1 = new_temp_list[11]
+            current_count_2 = new_temp_list[5].split(',')
+            self.current_count = current_count_2[0]
             current_count_out = current_count_1.split(',')
             current_count_out_true = current_count_out[0]
             current_count = new_temp_list[len(new_temp_list) - 1]
@@ -623,21 +648,22 @@ class status():
             current_count_list_x.append(i)
         self.end_line_enter_one_eidt = int(float(self.lineEditConfi.text()))
         print(self.current_count)
+        self.ui.label_28.setText(str(self.current_count))
         self.ui.label_32.setText(str(self.current_count))
         self.ui.label_34.setText(str(current_count_in_true))
         self.ui.label_36.setText(str(current_count_out_true))
 
-
     def read_txt_file_mult(self):
         end_file_name_list = self.end_file_name.split('.')
         self.end_file_name = end_file_name_list[0]
-        f = open('output/' + self.end_file_name +  '_flow_statistic.txt', 'r')
+        f = open('output/' + self.end_file_name + '_flow_statistic.txt', 'r')
         with open('output/' + self.end_file_name + '_flow_statistic.txt', 'r') as f1:
             list = f1.readlines()
         current_count_list_y = []
         current_count_list_x = []
         y_test = []
-        test = int(len(list) / 50) + 1
+        line_text_2 = self.ui.lineEdit_2.text()
+        test = int(int(line_text_2) / 50) + 1
         iter = 0
         for i in range(test):
             new_temp_list = list[iter - 1].strip('\n').split(' ')
@@ -658,9 +684,7 @@ class status():
         plt.subplots_adjust(bottom=0.10)
         plt.savefig('people_image.png')
         plt.show()
-        pic = QPixmap('people_image.png')
-        self.ui.label_9.setPixmap(pic)
-        self.ui.label_9.setScaledContents(True)
+
         # 当前的人数计数
         self.current_count = current_count_list_y[len(current_count_list_y) - 1]
         f.close()
@@ -679,6 +703,7 @@ class status():
         test = int(len(list) / 50) + 1
         iter = 0
         for i in range(test):
+            print(list)
             new_temp_list = list[iter - 1].strip('\n').split(' ')
             current_count = new_temp_list[len(new_temp_list) - 1]
             print(new_temp_list)
@@ -704,8 +729,10 @@ class status():
         self.current_count = current_count_list_y[len(current_count_list_y) - 1]
         self.ui.label_30.setText(str(self.current_count))
         f.close()
+        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
         frames_num = self.cap1.get(7)
         fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
+
 
     def synthesis_vide(self, val, video_name):
         video_name_list = video_name.split('.')
@@ -741,7 +768,9 @@ class status():
         self.timer_camera1 = []
         self.ui.label_7.setFixedSize\
             (self.ui.label_7.width(), self.ui.label_7.height())
+        print(self.file_path[0])
         self.cap1 = cv2.VideoCapture(self.file_path[0])
+        print(self.cap1)
         self.frame_count = 0
         self.timer_camera1 = QTimer()
         self.load_video_controller()
@@ -758,13 +787,15 @@ class status():
             self.load_control_for_double_photo()
 
     def load_video_controller(self):
-        self.ui.pushButton.clicked.connect(self.video_start)
-        self.ui.pushButton_2.clicked.connect(self.video_pause)
+        self.ui.pushButton.clicked.connect(self.video_pause)
+        self.ui.pushButton_2.clicked.connect(self.video_start)
         self.ui.pushButton_3.clicked.connect(self.video_stop)
         self.ui.pushButton_4.clicked.connect(self.tracking_is)
 
     def tracking_is(self):
-        self.is_tracking = 'False'
+        self.is_tracking = ''
+        self.ui.pushButton_4.setStyleSheet("QPushButton{\nwidth: 120px;\nheight: 44px;\nbackground: #F5F5F5;\nborder-radius: 4px;\nborder: 1px solid #CCCCCC;\nfont-size: 18px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: #B8B8B8;\nline-height: 26px;\nfont-weight:bold\n}")
+
 
     def video_stop(self):
         self.timer_camera1.stop()
@@ -775,16 +806,24 @@ class status():
         # 可以让视频被清除掉，或者一些其他的功能
 
     def video_start(self):
-         self.timer_camera1.start(120)
-         self.timer_camera1.timeout.connect(self.OpenFrame1)
-         if self.have_show_video == 2:
-             self.timer_camera2.start(100)
-             self.timer_camera2.timeout.connect(self.OpenFrame2)
+        self.timer_camera1.start(120)
+        self.timer_camera1.timeout.connect(self.OpenFrame1)
+        if self.have_show_video == 2:
+            self.timer_camera2.start(100)
+            self.timer_camera2.timeout.connect(self.OpenFrame2)
 
     def video_pause(self):
-        self.timer_camera1.stop()
-        if self.have_show_video == 2:
-            self.timer_camera2.stop()
+        print("我进来啦！！！！！！！")
+        # self.timer_camera1.stop()
+        # if self.have_show_video == 2:
+        #     self.timer_camera2.stop()
+        self.ui.pushButton.setStyleSheet("QPushButton{\nwidth: 120px;\nheight: 44px;\nbackground: #F5F5F5;\nborder-radius: 4px;\nborder: 1px solid #CCCCCC;\nfont-size: 18px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: #B8B8B8;\nline-height: 26px;\nfont-weight:bold\n}")
+        if self.page_id == 6 or self.page_id == 7:
+            self.t1 = threading.Thread(target=self.load_model_mult)
+            self.t1.start()
+        else :
+            self.t1 = threading.Thread(target=self.load_model)
+            self.t1.start()
 
     def OpenFrame1(self):
         ret, frame = self.cap1.read()

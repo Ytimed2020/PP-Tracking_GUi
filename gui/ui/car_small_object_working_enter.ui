@@ -202,7 +202,7 @@ font-weight:bold
 }</string>
      </property>
      <property name="text">
-      <string>开始运行</string>
+      <string>模型运行</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_2">
@@ -256,7 +256,7 @@ font-weight: bold;
 }</string>
      </property>
      <property name="text">
-      <string>暂停运行</string>
+      <string>结果显示</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_3">
