@@ -461,7 +461,7 @@ font-weight:bold;
     <widget class="QPushButton" name="pushButton_8">
      <property name="geometry">
       <rect>
-       <x>1251</x>
+       <x>1340</x>
        <y>40</y>
        <width>126</width>
        <height>44</height>
@@ -498,47 +498,7 @@ line-height: 24px;
 }</string>
      </property>
      <property name="text">
-      <string>导出txt文件</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_9">
-     <property name="geometry">
-      <rect>
-       <x>1385</x>
-       <y>40</y>
-       <width>139</width>
-       <height>44</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-width: 120px;
-height: 40px;
-border-radius: 4px;
-border: 1px solid #4E4EF2;
-font-weight:bold;
-
-font-size: 16px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
-color: #4E4EF2;
-line-height: 24px;
-}
-QPushButton:hover{
-width: 120px;
-height: 44px;
-background: rgba(255, 255, 255, 204);
-border-radius: 4px;
-border: 1px solid rgba(78, 78, 242, 204);
-
-font-weight:bold;
-font-size: 16px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
-color: rgba(78, 78, 242, 204);
-line-height: 24px;
-}</string>
-     </property>
-     <property name="text">
-      <string>导出视频结果</string>
+      <string>导出文件</string>
      </property>
     </widget>
     <widget class="QWidget" name="widget_2" native="true">
@@ -870,7 +830,7 @@ font-weight:bold;
 }</string>
       </property>
       <property name="text">
-       <string>100</string>
+       <string>2</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_9">
@@ -1483,7 +1443,7 @@ padding:10px
    <widget class="QLabel" name="label_txt_tip">
     <property name="geometry">
      <rect>
-      <x>1340</x>
+      <x>1420</x>
       <y>190</y>
       <width>301</width>
       <height>91</height>

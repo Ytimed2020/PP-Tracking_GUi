@@ -430,7 +430,7 @@ font-weight:bold;
     <widget class="QPushButton" name="pushButton_8">
      <property name="geometry">
       <rect>
-       <x>1251</x>
+       <x>1310</x>
        <y>40</y>
        <width>126</width>
        <height>44</height>
@@ -467,47 +467,7 @@ line-height: 24px;
 }</string>
      </property>
      <property name="text">
-      <string>导出txt文件</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_9">
-     <property name="geometry">
-      <rect>
-       <x>1385</x>
-       <y>40</y>
-       <width>139</width>
-       <height>44</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-width: 120px;
-height: 40px;
-border-radius: 4px;
-border: 1px solid #4E4EF2;
-font-weight:bold;
-
-font-size: 16px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
-color: #4E4EF2;
-line-height: 24px;
-}
-QPushButton:hover{
-width: 120px;
-height: 44px;
-background: rgba(255, 255, 255, 204);
-border-radius: 4px;
-border: 1px solid rgba(78, 78, 242, 204);
-
-font-weight:bold;
-font-size: 16px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
-color: rgba(78, 78, 242, 204);
-line-height: 24px;
-}</string>
-     </property>
-     <property name="text">
-      <string>导出视频结果</string>
+      <string>导出文件</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_22">
@@ -866,7 +826,6 @@ border:0px;
     <zorder>label_12</zorder>
     <zorder>label_13</zorder>
     <zorder>pushButton_8</zorder>
-    <zorder>pushButton_9</zorder>
     <zorder>label_22</zorder>
     <zorder>label_23</zorder>
     <zorder>widget_8</zorder>
@@ -885,7 +844,7 @@ border:0px;
    <widget class="QLabel" name="label_txt_tip">
     <property name="geometry">
      <rect>
-      <x>1340</x>
+      <x>1390</x>
       <y>190</y>
       <width>301</width>
       <height>91</height>
@@ -907,7 +866,7 @@ padding:10px
 }</string>
     </property>
     <property name="text">
-     <string>导出txt文件释义：内容内容内容内容内容内容内容内容内容内容内容内容内容内容</string>
+     <string>文件导出到output文件夹下，后缀为_flow_statistic.txt</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>

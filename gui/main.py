@@ -10,10 +10,12 @@ import sys, os
 import PySide2
 import datetime
 import firstSource
+import matplotlib
 import matplotlib.pyplot as plt
 import secondSource
 from PySide2.QtGui import QMovie
 import sys
+matplotlib.use('agg')
 sys.path.append('deploy')
 
 from MyControl import *
@@ -22,6 +24,7 @@ from PIL import Image
 dirname = os.path.dirname(PySide2.__file__)
 plugin_path = os.path.join(dirname, 'plugins', 'platforms')
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
+os.environ['PYTHON_EXE'] = sys.executable
 
 
 class status():
@@ -375,7 +378,6 @@ class status():
         result.append(self.lineEditConfi.text())
         result.append(self.ui.lineEdit_2.text())
         print(self.ui.lineEdit_2.text())
-        print("*****************************************************77777")
         self.is_draw_line = '--do_entrance_counting'
         if self.is_enter==False:
             self.is_enter = True
@@ -383,7 +385,7 @@ class status():
         else:
             self.is_enter = False
             self.init_base_ui_for_one_photo_changing_enter(self.not_enter_ui)
-        self.lineEditConfi.setText(result[0])
+        self.lineEditConfi.setText("0.5")
         self.ui.lineEdit_2.setText(result[1])
         pic = QPixmap('source/second/loading.png')
         self.ui.label_7.setPixmap(pic)
@@ -400,7 +402,7 @@ class status():
                                         , 0, 352, 930, 57, 42, self.ui)
         s="""QPushButton{\nwidth: 120px;\nheight: 40px;\nborder-radius: 4px;\nborder: 1px solid #4E4EF2;\nfont-weight:bold;\n\nfont-size: 16px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: #4E4EF2;\nline-height: 24px;\n}\nQPushButton:hover{\nwidth: 120px;\nheight: 44px;\nbackground: rgba(255, 255, 255, 204);\nborder-radius: 4px;\nborder: 1px solid rgba(78, 78, 242, 204);\n\nfont-weight:bold;\nfont-size: 16px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: rgba(78, 78, 242, 204);\nline-height: 24px;\n}"""
         self.output_txt = MyPushButton(self.ui.label_txt_tip, s
-                                       , "导出txt文件", 1419, 290, 126, 44, self.ui)
+                                       , "导出文件", 1507.5, 290, 126, 44, self.ui)
 
         self.help_set_shadow(0, 0, 50, QColor(0, 0, 0, 0.06 * 255)
                              , self.ui.widget_2)
@@ -421,7 +423,7 @@ class status():
                                         , 0, 352, 930, 57, 42, self.ui)
         s = """QPushButton{\nwidth: 126px;\nheight: 44px;\nbackground: #FFFFFF;\nborder-radius: 4px;\nborder: 1px solid #4E4EF2;\nfont-size: 18px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: #4E4EF2;\nline-height: 26px;\nfont-weight:bold;\n}"""
         self.output_txt = MyPushButton(self.ui.label_txt_tip, s
-                                       , "导出txt文件", 1419, 290, 126, 44, self.ui)
+                                       , "导出文件", 1507.5, 290, 126, 44, self.ui)
         self.ui.show()
         self.help_set_shadow(0, 4, 0, QColor(221, 221, 221, 0.3 * 255)
                              , self.ui.label_3)
@@ -455,12 +457,11 @@ class status():
         """
         num_now = len(self.file_path)
         filePath = self.open_one_file_dialog("选择视频", 0)
-        control_hide.setVisible(False)
-        control_label.setText("已添加")
+        # control_hide.setVisible(False)
+        # control_label.setText("已添加")
         if filePath == "":
             return
         self.file_path.append(filePath)
-
         if len(self.file_path) < self.have_show_video:
             return
         # 数量对不上就return，说明没有给够
@@ -469,7 +470,8 @@ class status():
             self.init_base_ui_for_one_photo_changing_enter(self.not_enter_ui)
         else:
             self.init_base_ui_for_double_photo(self.not_enter_ui)
-        # 一开始是没有打开
+        self.lineEditConfi.setText("0.5")
+
         file_temp_split_path = self.file_path[0].split('.')
         self.file_name = file_temp_split_path[0]
         self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
@@ -486,29 +488,14 @@ class status():
             self.ui.label_9.setPixmap(pic)
             self.ui.label_9.setScaledContents(True)
         self.open_video()
-        # self.open_video()
 
     def load_model(self):
-        # pic = QPixmap('people_image.png')
-        # self.ui.label_7.setPixmap(pic)
-        # self.ui.label_7.setScaledContents(True)
         print(self.file_name)
         file_name_test = self.file_name.split('/')
         file_path_test = self.file_path[0].split('/')
         file_name_test_start = file_name_test[len(file_name_test) - 1]
-        # if len(file_path_test) == 0:
-        #     self.file_name = file_path_test
-        # else:
-        #     file_path_name_length = len(file_path_test)
-        #     self.file_name = file_path_test[file_path_name_length - 1]
-        # # print(self.file_name)
         self.file_name = file_name_test_start + '.mp4'
         self.end_file_name = self.file_name
-        # temp_file_name = self.file_name.split('.')
-        # self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
-        # self.file_path[0] = self.ooutput_videos
-        # file_name是获取到的文件名，最终获取输出视频点
-        # print(self.ui.label_23.width())
         self.ui.label_23.setFixedSize \
             (self.ui.label_23.width(), self.ui.label_23.height())
         self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
@@ -543,7 +530,7 @@ class status():
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         else:
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s --draw_center_traj %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s % %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
@@ -592,19 +579,9 @@ class status():
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
         self.final_time = str(endtime_count - starttime_count)
-        # self.ui.label_28.setText(str((endtime_count - starttime_count)))
 
-        # print(self.file_name)
         temp_file_name = self.file_name.split('.')
         self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
-        # clip = VideoFileClip(self.ooutput_videos)
-
-        # self.cap1.release()
-        # self.frame_count = 0
-        # self.cap1 = cv2.VideoCapture(self.ooutput_videos)
-        # self.load_video_controller()
-        # # self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        # self.video_start()
         self.synthesis_vide(val, self.file_name)
         self.read_txt_file_mult()
         for i in range(101):
@@ -813,7 +790,6 @@ class status():
             self.timer_camera2.timeout.connect(self.OpenFrame2)
 
     def video_pause(self):
-        print("我进来啦！！！！！！！")
         # self.timer_camera1.stop()
         # if self.have_show_video == 2:
         #     self.timer_camera2.stop()

@@ -464,8 +464,8 @@ font-weight:bold;
     <widget class="QPushButton" name="pushButton_8">
      <property name="geometry">
       <rect>
-       <x>1251</x>
-       <y>40</y>
+       <x>1340</x>
+       <y>50</y>
        <width>126</width>
        <height>44</height>
       </rect>
@@ -485,34 +485,7 @@ font-weight:bold
 }</string>
      </property>
      <property name="text">
-      <string>导出txt文件</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_9">
-     <property name="geometry">
-      <rect>
-       <x>1385</x>
-       <y>40</y>
-       <width>139</width>
-       <height>44</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-width: 120px;
-height: 44px;
-background: #F5F5F5;
-border-radius: 4px;
-border: 1px solid #CCCCCC;
-font-size: 18px;
-font-family: AlibabaPuHuiTi_2_65_Medium;
-color: #B8B8B8;
-line-height: 26px;
-font-weight:bold
-}</string>
-     </property>
-     <property name="text">
-      <string>导出视频结果</string>
+      <string>导出文件</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_22">
@@ -783,7 +756,6 @@ font-weight:bold;
     <zorder>label_12</zorder>
     <zorder>label_13</zorder>
     <zorder>pushButton_8</zorder>
-    <zorder>pushButton_9</zorder>
     <zorder>pushButton_6</zorder>
     <zorder>pushButton_7</zorder>
     <zorder>label_10</zorder>
