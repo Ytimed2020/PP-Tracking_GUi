@@ -10,7 +10,9 @@ import sys, os
 import PySide2
 import datetime
 import firstSource
+import matplotlib
 import matplotlib.pyplot as plt
+matplotlib.use('agg')
 import secondSource
 from PySide2.QtGui import QMovie
 import sys
@@ -22,7 +24,7 @@ from PIL import Image
 dirname = os.path.dirname(PySide2.__file__)
 plugin_path = os.path.join(dirname, 'plugins', 'platforms')
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
-
+os.environ['PYTHON_EXE'] = sys.executable
 
 class status():
     def __init__(self):
@@ -470,9 +472,12 @@ class status():
         else:
             self.init_base_ui_for_double_photo(self.not_enter_ui)
         # 一开始是没有打开
+        # file_path: ['xx/test.mp4']
+        # file_name: test
         file_temp_split_path = self.file_path[0].split('.')
-        self.file_name = file_temp_split_path[0]
-        self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
+        self.file_name = file_temp_split_path[0].split('/')[-1]
+        #self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
+
         print(self.file_path[0])
         pic = QPixmap('source/second/loading.png')
         self.ui.label_7.setPixmap(pic)
@@ -492,18 +497,18 @@ class status():
         # pic = QPixmap('people_image.png')
         # self.ui.label_7.setPixmap(pic)
         # self.ui.label_7.setScaledContents(True)
-        print(self.file_name)
-        file_name_test = self.file_name.split('/')
-        file_path_test = self.file_path[0].split('/')
-        file_name_test_start = file_name_test[len(file_name_test) - 1]
+        cur_file_path = self.file_path[0]
+        # file_name_test = self.file_name.split('/')
+        # file_path_test = self.file_path[0].split('/')
+        # file_name_test_start = file_name_test[len(file_name_test) - 1]
         # if len(file_path_test) == 0:
         #     self.file_name = file_path_test
         # else:
         #     file_path_name_length = len(file_path_test)
         #     self.file_name = file_path_test[file_path_name_length - 1]
         # # print(self.file_name)
-        self.file_name = file_name_test_start + '.mp4'
-        self.end_file_name = self.file_name
+        # self.file_name = file_name_test_start + '.mp4'
+        # self.end_file_name = file_name_test_start
         # temp_file_name = self.file_name.split('.')
         # self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
         # self.file_path[0] = self.ooutput_videos
@@ -520,31 +525,34 @@ class status():
         print(self.is_draw_line)
         print(self.is_tracking)
         print("lzclzclzclzclzclzc")
+        python_exe = os.environ['PYTHON_EXE']
         if self.page_id == 1:
+            import sys
+            print('python version: ', sys.version)
             print("当前是行人模型")
-            print(self.file_name)
+            os.system('which python')
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                '%s deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320 --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (python_exe, cur_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 2:
             print("当前是车辆模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                '%s deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (python_exe, cur_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 3:
             print("当前是行人小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                '%s deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (python_exe, cur_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 5:
             print("当前是车辆小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                '%s deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (python_exe, cur_file_path, self.confi, self.is_tracking, self.is_draw_line))
         else:
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s --draw_center_traj %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                '%s deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_dla34_30e_1088x608 --video_file=%s  --save_mot_txts --device=GPU --threshold=%s --draw_center_traj %s' \
+                % (python_exe, cur_file_path, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
@@ -552,7 +560,7 @@ class status():
         self.ui.label_28.setText(str((endtime_count - starttime_count)))
 
 
-        self.synthesis_vide(val, self.file_name)
+        #self.synthesis_vide(val, self.file_name)
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
@@ -585,6 +593,7 @@ class status():
         # 判断是行人模型还是车辆模型
         print("*******************************************************")
         print(self.confi)
+
         val = os.system(
             'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
             % (self.file_name, self.confi, self.is_draw_line))
@@ -624,10 +633,10 @@ class status():
     def read_enter_txt_file(self):
         self.ui.label_26.setText(str(self.final_time))
         self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-        end_file_name_list = self.end_file_name.split('.')
-        self.end_file_name = end_file_name_list[0]
-        f = open('output/' + self.end_file_name + '_flow_statistic.txt', 'r')
-        with open('output/' + self.end_file_name + '_flow_statistic.txt', 'r') as f1:
+        #end_file_name_list = self.end_file_name.split('.')
+        #self.end_file_name = end_file_name_list[0]
+        #f = open('output/' + self.file_name + '_flow_statistic.txt', 'r')
+        with open('output/' + self.file_name + '_flow_statistic.txt', 'r') as f1:
             list = f1.readlines()
         current_count_list_y = []
         current_count_list_x = []
@@ -692,10 +701,10 @@ class status():
         fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
 
     def read_txt_file(self):
-        end_file_name_list = self.end_file_name.split('.')
-        self.end_file_name = end_file_name_list[0]
-        f = open('output/' + self.end_file_name +  '_flow_statistic.txt', 'r')
-        with open('output/' + self.end_file_name + '_flow_statistic.txt', 'r') as f1:
+        #end_file_name_list = self.end_file_name.split('.')
+        #self.end_file_name = end_file_name_list[0]
+        #f = open('output/' + self.end_file_name +  '_flow_statistic.txt', 'r')
+        with open('output/' + self.file_name + '_flow_statistic.txt', 'r') as f1:
             list = f1.readlines()
         current_count_list_y = []
         current_count_list_x = []
@@ -728,7 +737,7 @@ class status():
         # 当前的人数计数
         self.current_count = current_count_list_y[len(current_count_list_y) - 1]
         self.ui.label_30.setText(str(self.current_count))
-        f.close()
+        #f.close()
         self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
         frames_num = self.cap1.get(7)
         fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
@@ -764,13 +773,13 @@ class status():
     def open_video(self):
         self.have_show_time=0
         self.frame1 = []
-        self.cap1 = []
+        #self.cap1 = []
         self.timer_camera1 = []
         self.ui.label_7.setFixedSize\
             (self.ui.label_7.width(), self.ui.label_7.height())
         print(self.file_path[0])
-        self.cap1 = cv2.VideoCapture(self.file_path[0])
-        print(self.cap1)
+        #self.cap1 = cv2.VideoCapture(self.file_path[0])
+        #print(self.cap1)
         self.frame_count = 0
         self.timer_camera1 = QTimer()
         self.load_video_controller()
@@ -806,6 +815,7 @@ class status():
         # 可以让视频被清除掉，或者一些其他的功能
 
     def video_start(self):
+        self.cap1 = cv2.VideoCapture('output/'+self.file_name + '.mp4')
         self.timer_camera1.start(120)
         self.timer_camera1.timeout.connect(self.OpenFrame1)
         if self.have_show_video == 2:
