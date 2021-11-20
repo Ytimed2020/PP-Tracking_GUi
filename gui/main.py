@@ -474,8 +474,9 @@ class status():
 
         file_temp_split_path = self.file_path[0].split('.')
         self.file_name = file_temp_split_path[0]
-        self.file_path[0] = file_temp_split_path[0] + '_output_test.mp4'
+        self.file_path[0] = 'output/' + file_temp_split_path[0].split('/')[-1] + '.mp4'
         print(self.file_path[0])
+        print("********************")
         pic = QPixmap('source/second/loading.png')
         self.ui.label_7.setPixmap(pic)
         self.ui.label_7.setScaledContents(True)
@@ -511,26 +512,26 @@ class status():
             print("当前是行人模型")
             print(self.file_name)
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 2:
             print("当前是车辆模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 3:
             print("当前是行人小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 5:
             print("当前是车辆小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         else:
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s % %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_mot_txts --device=GPU --threshold=%s % %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
@@ -539,7 +540,7 @@ class status():
         self.ui.label_28.setText(str((endtime_count - starttime_count)))
 
 
-        self.synthesis_vide(val, self.file_name)
+        # self.synthesis_vide(val, self.file_name)
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
@@ -550,8 +551,6 @@ class status():
         else:
             self.read_enter_txt_file()
         self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        # self.video_start()
-        # self.load_video_controller()
 
 
     def load_model_mult(self):
