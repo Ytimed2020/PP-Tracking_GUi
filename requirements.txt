@@ -1,0 +1,6 @@
+opencv-python
+Cython
+cython_bbox
+matplotlib
+PySide2
+VideoFileClip
