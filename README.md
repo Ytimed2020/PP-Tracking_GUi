@@ -4,9 +4,8 @@
 
 在PaddlePaddle中加入pyqt进行GUI页面研发，可使得整个训练过程可视化，并通过GUI界面进行调参，模型预测，视频输出等，通过多种类型的识别，简化整体预测流程。
 
-<div width="1000" align="center">
-  <img src="pptracking-gui.png"/>
-</div>
+![image-20211122180124835](https://z3.ax1x.com/2021/11/22/IzBXjg.png)
+
 
 主要包含两个步骤：
 
