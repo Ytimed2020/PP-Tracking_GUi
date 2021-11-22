@@ -1,30 +1,48 @@
-# Tracking-GUI界面
+# PP-Tracking GUI界面
 
-在PaddlePaddle中加入pyqt进行GUI页面研发，可使得整个训练过程可视化，并通过GUI界面进行调参，模型训练，视频输出等，通过多种类型的识别，简化整体训练难度。
+本项目是基于飞桨开源的实时跟踪系统[PP-Tracking](https://github.com/PaddlePaddle/PaddleDetection/blob/develop/deploy/pptracking/README.md)开发的可视化界面
 
+在PaddlePaddle中加入pyqt进行GUI页面研发，可使得整个训练过程可视化，并通过GUI界面进行调参，模型预测，视频输出等，通过多种类型的识别，简化整体预测流程。
+
+<div width="1000" align="center">
+  <img src="pptracking-gui.png"/>
+</div>
 
 主要包含两个步骤：
 
 - 导入训练模型，修改模型名称
 - 安装必要的依赖库
+- 启动前端界面
 
-## 1. 导入预测模型
+## 1. 下载预测模型
 
-PaddleDetection在训练过程包括网络的前向和优化器相关参数，而在部署过程中，我们只需要前向参数，具体参考:[导出模型](https://github.com/PaddlePaddle/PaddleDetection/blob/develop/deploy/EXPORT_MODEL.md)
+PP-Tracking 提供了覆盖多种场景的预测模型，用户可以根据自己的实际使用场景在[链接](https://github.com/PaddlePaddle/PaddleDetection/blob/develop/deploy/pptracking/README.md#%E4%BA%8C%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D)中直接下载表格最后一列的预测部署模型
 
-导入后目录下，包括`infer_cfg.yml`, `model.pdiparams`,  `model.pdiparams.info`, `model.pdmodel`四个文件。
+如果您想自己训练得到更符合您场景需求的模型，可以参考[快速开始文档](https://github.com/PaddlePaddle/PaddleDetection/blob/develop/configs/mot/fairmot/README_cn.md#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)训练并导出预测模型
+
+模型导出放在`./output_inference`目录下
+
 
 ## 2. 必要的依赖库安装
 
 ```
 pyqt5
-VideoFileClip
+moviepy
 opencv-python
 PySide2
 matplotlib
+scipy
+cython_bbox
+paddlepaddle
 ```
 
-在GUI界面选择后：
+**注：**
+
+1. Windows环境下，需要手动下载安装[cython_bbox](https://pypi.org/project/pip/)，然后将setup.py中的找到steup.py, 修改`extra_compile_args=[’-Wno-cpp’]`，替换为`extra_compile_args = {'gcc': ['/Qstd=c99']}`, 然后运行`python setup.py build_ext install`
+
+## 3. 启动前端界面
+
+执行`python main.py`启动前端界面
 
 
 参数说明如下:
@@ -32,11 +50,11 @@ matplotlib
 | 参数       | 是否必须 | 含义                                     |
 | ---------- | -------- | ---------------------------------------- |
 | 模型运行   | Option   | 点击后进行模型训练                       |
-| 结果显示   | Option   | 在运行进度达到100%的时候进行结果视频显示 |
+| 结果显示   | Option   | 在运行状态为检测完成的时候进行结果视频显示 |
 | 停止运行   | Option   | 停止整个视频输出                         |
 | 取消轨迹   | Option   | 在一开始时取消轨迹                       |
 | 阈值调试   | Option   | 预测得分的阈值，默认为0.5                |
-| 输入FPS    | Option   | 视频的FPS                                |
+| 输入FPS    | Option   | 输入视频的FPS                                |
 | 检测用时   | Option   | 视频的检测时间                           |
 | 人流量检测 | Option   | 每隔一段帧数内的人流量统计图表           |
 | 时间长度   | Option   | 人流量时间统计长度                       |
