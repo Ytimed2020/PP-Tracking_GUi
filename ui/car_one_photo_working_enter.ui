@@ -469,7 +469,7 @@ font-weight:bold;
 }</string>
      </property>
      <property name="text">
-      <string>检测进度：</string>
+      <string>检测状态：</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_8">
@@ -1256,9 +1256,9 @@ border-radius: 5px;
     <widget class="QLabel" name="label_progressBar_num">
      <property name="geometry">
       <rect>
-       <x>852</x>
+       <x>829</x>
        <y>654</y>
-       <width>48</width>
+       <width>101</width>
        <height>36</height>
       </rect>
      </property>
@@ -1441,7 +1441,7 @@ padding:10px
 }</string>
      </property>
      <property name="text">
-      <string>阙值调试释义：内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</string>
+      <string>请在导入视频前调试阈值；阈值默认值：0.5 </string>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

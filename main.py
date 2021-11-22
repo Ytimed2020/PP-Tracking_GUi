@@ -40,6 +40,9 @@ class status():
         qfile_staus.open(QFile.ReadOnly)
         qfile_staus.close()
         self.ui = QUiLoader().load(qfile_staus)
+        self.ui.setWindowTitle("百度飞桨PP-Tracking")
+        appIcon = QIcon("source/first/logo.jpg")
+        self.ui.setWindowIcon(appIcon)
 
     def help_set_shadow(self, x_offset
                         , y_offset
@@ -109,7 +112,7 @@ class status():
         :param show_label:是self.ui.label_progressBar_num，直接传这个
         :return:
         """
-        show_label.setText(str(int(self.progressPos*100))+"%")
+        show_label.setText('  ')
         progress.resize(int(self.progressPos*len),progress.height())
 
 
@@ -508,49 +511,56 @@ class status():
         print(self.is_draw_line)
         print(self.is_tracking)
         print("lzclzclzclzclzclzc")
+        self.ui.label_progressBar_num.setText("运行中")
         if self.page_id == 1:
             print("当前是行人模型")
             print(self.file_name)
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320 --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 2:
             print("当前是车辆模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 3:
             print("当前是行人小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian_vehicle --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 5:
             print("当前是车辆小目标跟踪模型")
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320_visdrone_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+        elif self.page_id == 7:
+            val = os.system(
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/mcfairmot_hrnetv2_w18_dlafpn_30e_576x320_bdd100k_mcmot --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         else:
             val = os.system(
-                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_mot_txts --device=GPU --threshold=%s % %s' \
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/mcfairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
                 % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
         self.final_time = str(endtime_count - starttime_count)
         self.ui.label_28.setText(str((endtime_count - starttime_count)))
-
+        pic = QPixmap('source/second/model_ok.png')
+        self.ui.label_7.setPixmap(pic)
+        self.ui.label_7.setScaledContents(True)
 
         # self.synthesis_vide(val, self.file_name)
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
                                    , self.ui.label_progressBar_num)
-
+        self.ui.label_progressBar_num.setText("检测完成")
         if self.is_enter_surely == 0:
             self.read_txt_file()
         else:
             self.read_enter_txt_file()
-        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        # self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
 
 
     def load_model_mult(self):
@@ -659,7 +669,7 @@ class status():
         plt.margins(0)
         plt.subplots_adjust(bottom=0.10)
         plt.savefig('people_image.png')
-        plt.show()
+        # plt.show()
 
         # 当前的人数计数
         self.current_count = current_count_list_y[len(current_count_list_y) - 1]
@@ -697,7 +707,7 @@ class status():
         plt.margins(0)
         plt.subplots_adjust(bottom=0.10)
         plt.savefig('people_image.png')
-        plt.show()
+        # plt.show()
         pic = QPixmap('people_image.png')
         self.ui.label_33.setPixmap(pic)
         self.ui.label_33.setScaledContents(True)
@@ -705,9 +715,9 @@ class status():
         self.current_count = current_count_list_y[len(current_count_list_y) - 1]
         self.ui.label_30.setText(str(self.current_count))
         f.close()
-        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        frames_num = self.cap1.get(7)
-        fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
+        # print(self.cap1[0])
+        # frames_num = self.cap1.get(7)
+        # fps = int(round(self.cap1.get(cv2.CAP_PROP_FPS)))
 
 
     def synthesis_vide(self, val, video_name):
@@ -745,8 +755,6 @@ class status():
         self.ui.label_7.setFixedSize\
             (self.ui.label_7.width(), self.ui.label_7.height())
         print(self.file_path[0])
-        self.cap1 = cv2.VideoCapture(self.file_path[0])
-        print(self.cap1)
         self.frame_count = 0
         self.timer_camera1 = QTimer()
         self.load_video_controller()
@@ -782,6 +790,8 @@ class status():
         # 可以让视频被清除掉，或者一些其他的功能
 
     def video_start(self):
+        self.cap1 = cv2.VideoCapture(self.file_path[0])
+        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
         self.timer_camera1.start(120)
         self.timer_camera1.timeout.connect(self.OpenFrame1)
         if self.have_show_video == 2:

@@ -458,7 +458,7 @@ font-weight:bold;
 }</string>
      </property>
      <property name="text">
-      <string>检测进度：</string>
+      <string>检测状态：</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_8">

@@ -424,7 +424,7 @@ font-weight:bold;
 }</string>
      </property>
      <property name="text">
-      <string>检测进度：</string>
+      <string>检测状态：</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_8">
@@ -560,9 +560,9 @@ border-radius: 5px;
     <widget class="QLabel" name="label_progressBar_num">
      <property name="geometry">
       <rect>
-       <x>852</x>
+       <x>839</x>
        <y>654</y>
-       <width>48</width>
+       <width>81</width>
        <height>36</height>
       </rect>
      </property>
