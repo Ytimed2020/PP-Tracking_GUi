@@ -47,3 +47,4 @@ matplotlib
 说明：
 
 - 如果安装的PaddlePaddle不支持基于TensorRT进行预测，需要自行编译，详细可参考[预测库编译教程](https://paddleinference.paddlepaddle.org.cn/user_guides/source_compile.html)。
+- 建议使用windows环境进行运行
