@@ -453,6 +453,16 @@ class status():
                                ,self.ui.label_progressBar_num)
         return
 
+    def load_control_for_one_mult_photo(self):
+        self.help_set_spinBox(self.lineEditConfi, self.ui.pushButton_7
+                              , self.ui.pushButton_11, 0.01)
+        # self.help_set_spinBox(self.ui.lineEdit_2, self.ui.pushButton_5
+        #                       , self.ui.pushButton_6, 1)
+
+        self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
+                               , self.ui.label_progressBar_num)
+        return
+
     def load_video(self,control_hide,control_label):
         """
         :param video_count: 要导入视频的数量，单镜头是1，跨境是2
@@ -564,16 +574,12 @@ class status():
 
 
     def load_model_mult(self):
+        print(self.file_name)
+        file_name_test = self.file_name.split('/')
         file_path_test = self.file_path[0].split('/')
-        if len(file_path_test) == 0:
-            self.file_name = file_path_test
-        else:
-            file_path_name_length = len(file_path_test)
-            self.file_name = file_path_test[file_path_name_length - 1]
-        # print(self.file_name)
+        file_name_test_start = file_name_test[len(file_name_test) - 1]
+        self.file_name = file_name_test_start + '.mp4'
         self.end_file_name = self.file_name
-        # file_name是获取到的文件名，最终获取输出视频点
-        # print(self.ui.label_23.width())
         self.ui.label_23.setFixedSize \
             (self.ui.label_23.width(), self.ui.label_23.height())
         self.ui.label_time.setText(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
@@ -581,31 +587,34 @@ class status():
         # 判断是行人模型还是车辆模型
         print("*******************************************************")
         print(self.confi)
-        val = os.system(
-            'python deploy/pptracking/python/mot_jde_infer.py --model_dir=fairmot_dla34_30e_1088x608 --video_file=%s  --save_images --save_mot_txts --device=GPU --threshold=%s %s --do_entrance_counting' \
-            % (self.file_name, self.confi, self.is_draw_line))
+        # draw_center_traj
+        print(self.is_draw_line)
+        print(self.is_tracking)
+        print("lzclzclzclzclzclzc")
+        self.ui.label_progressBar_num.setText("运行中")
+        if self.page_id == 7:
+            val = os.system(
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/mcfairmot_hrnetv2_w18_dlafpn_30e_576x320_bdd100k_mcmot --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+        else:
+            val = os.system(
+                'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/mcfairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
+                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
-        self.final_time = str(endtime_count - starttime_count)
+        pic = QPixmap('source/second/model_ok.png')
+        self.ui.label_7.setPixmap(pic)
+        self.ui.label_7.setScaledContents(True)
 
-        temp_file_name = self.file_name.split('.')
-        self.ooutput_videos = temp_file_name[0] + '_output_test.mp4'
-        self.synthesis_vide(val, self.file_name)
-        self.read_txt_file_mult()
+        # self.synthesis_vide(val, self.file_name)
         for i in range(101):
             self.progressPos = i / 100
             self.help_set_progress(self.ui.widget_8.width(), self.ui.label_progressBar
                                    , self.ui.label_progressBar_num)
-        self.timer_camera1.stop()
-        self.cap1.release()
-        self.cap1 = None
-        self.frame_count = 0
-        self.cap1 = cv2.VideoCapture(self.ooutput_videos)
-        self.ui.label_17.setText("运行时间" + str((endtime_count - starttime_count)) /
-                                 +"运行FPS" + str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
-        self.video_start()
-        self.load_video_controller()
+        self.ui.label_progressBar_num.setText("检测完成")
+        # self.ui.label_17.setText("运行时间" + str((endtime_count - starttime_count)) /
+        #                          +"运行FPS" + str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
 
     def read_enter_txt_file(self):
         self.ui.label_26.setText(str(self.final_time))
@@ -759,7 +768,7 @@ class status():
         self.timer_camera1 = QTimer()
         self.load_video_controller()
         if self.have_show_video==1 and self.is_mult==False:self.load_control_for_one_photo()
-        if self.have_show_video==1 and self.is_mult==True:self.load_control_for_one_photo()
+        if self.have_show_video==1 and self.is_mult==True:self.load_control_for_one_mult_photo()
         if self.have_show_video==2:
             self.frame2 = []
             self.cap2 = []
@@ -790,8 +799,21 @@ class status():
         # 可以让视频被清除掉，或者一些其他的功能
 
     def video_start(self):
+        self.frame_count = 0
         self.cap1 = cv2.VideoCapture(self.file_path[0])
-        self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        if self.page_id == 8 or self.page_id == 7:
+            self.frame_count = 0
+        else:
+            self.ui.label_26.setText(str(round(self.cap1.get(cv2.CAP_PROP_FPS))))
+        self.timer_camera1.start(120)
+        self.timer_camera1.timeout.connect(self.OpenFrame1)
+        if self.have_show_video == 2:
+            self.timer_camera2.start(100)
+            self.timer_camera2.timeout.connect(self.OpenFrame2)
+
+    def video_start_mult(self):
+        self.frame_count = 0
+        self.cap1 = cv2.VideoCapture(self.file_path[0])
         self.timer_camera1.start(120)
         self.timer_camera1.timeout.connect(self.OpenFrame1)
         if self.have_show_video == 2:
@@ -803,7 +825,7 @@ class status():
         # if self.have_show_video == 2:
         #     self.timer_camera2.stop()
         self.ui.pushButton.setStyleSheet("QPushButton{\nwidth: 120px;\nheight: 44px;\nbackground: #F5F5F5;\nborder-radius: 4px;\nborder: 1px solid #CCCCCC;\nfont-size: 18px;\nfont-family: AlibabaPuHuiTi_2_65_Medium;\ncolor: #B8B8B8;\nline-height: 26px;\nfont-weight:bold\n}")
-        if self.page_id == 6 or self.page_id == 7:
+        if self.page_id == 8 or self.page_id == 7:
             self.t1 = threading.Thread(target=self.load_model_mult)
             self.t1.start()
         else :
