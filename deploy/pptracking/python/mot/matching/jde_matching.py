@@ -20,6 +20,8 @@ import scipy
 import numpy as np
 from scipy.spatial.distance import cdist
 from ..motion import kalman_filter
+import warnings
+warnings.filterwarnings("ignore")
 
 __all__ = [
     'merge_matches',
@@ -74,7 +76,7 @@ def cython_bbox_ious(atlbrs, btlbrs):
         import cython_bbox
     except Exception as e:
         print('cython_bbox not found, please install cython_bbox.'
-                     'for example: `pip install cython_bbox`.')
+              'for example: `pip install cython_bbox`.')
         exit()
 
     ious = cython_bbox.bbox_overlaps(
