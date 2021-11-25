@@ -28,14 +28,25 @@ PP-Tracking 提供了覆盖多种场景的预测模型，用户可以根据自�
 ## 2. 必要的依赖库安装
 
 ```
+pip install -r requirements.txt
+```
+其中包括以下依赖
+
+```
 pyqt5
 moviepy
 opencv-python
 PySide2
 matplotlib
 scipy
+Cython
 cython_bbox
 paddlepaddle
+pycocotools
+lap
+sklearn
+motmetrics
+openpyxl
 ```
 
 **注：**
