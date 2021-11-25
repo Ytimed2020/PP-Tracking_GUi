@@ -1,6 +1,13 @@
 opencv-python
+PyYAML
+scipy
 Cython
 cython_bbox
+pycocotools
 matplotlib
+lap
+sklearn
+motmetrics
+openpyxl
 PySide2
-VideoFileClip
+moviepy
