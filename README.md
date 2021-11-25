@@ -1,4 +1,4 @@
-# PP-Tracking GUI界面试用版
+# PP-Tracking GUI界面测试版
 
 本项目是基于飞桨开源的实时跟踪系统[PP-Tracking](https://github.com/PaddlePaddle/PaddleDetection/blob/develop/deploy/pptracking/README.md)开发的可视化界面
 
@@ -6,7 +6,9 @@
 
 ![image-20211122180124835](https://z3.ax1x.com/2021/11/22/IzBXjg.png)
 
-GUI界面当前覆盖单镜头的全部功能，如行人跟踪，车辆跟踪，流量统计等
+GUI界面基于PyQT和PP-Tracking python部署代码开发；当前覆盖单镜头的全部功能，如行人跟踪，车辆跟踪，流量统计等
+
+推荐使用Windows环境
 
 主要包含两个步骤：
 
