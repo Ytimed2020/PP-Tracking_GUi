@@ -484,12 +484,13 @@ class status():
         else:
             self.init_base_ui_for_double_photo(self.not_enter_ui)
         self.lineEditConfi.setText("0.5")
-
+        print(self.file_path[0])
+        self.model_file_path = self.file_path[0]
         file_temp_split_path = self.file_path[0].split('.')
         self.file_name = file_temp_split_path[0]
         self.file_path[0] = 'output/' + file_temp_split_path[0].split('/')[-1] + '.mp4'
         print(self.file_path[0])
-        print("********************")
+
         pic = QPixmap('source/second/loading.png')
         self.ui.label_7.setPixmap(pic)
         self.ui.label_7.setScaledContents(True)
@@ -524,33 +525,32 @@ class status():
         self.ui.label_progressBar_num.setText("运行中")
         if self.page_id == 1:
             print("当前是行人模型")
-            print(self.file_name)
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320 --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                % (self.model_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 2:
             print("当前是车辆模型")
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320_bdd100kmot_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                % (self.model_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 3:
             print("当前是行人小目标跟踪模型")
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone_pedestrian --video_file=%s   --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                % (self.model_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 5:
             print("当前是车辆小目标跟踪模型")
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/fairmot_hrnetv2_w18_dlafpn_30e_576x320_visdrone_vehicle --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                % (self.model_file_path, self.confi, self.is_tracking, self.is_draw_line))
         elif self.page_id == 7:
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/mcfairmot_hrnetv2_w18_dlafpn_30e_576x320_bdd100k_mcmot --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                % (self.model_file_path, self.confi, self.is_tracking, self.is_draw_line))
         else:
             val = os.system(
                 'python deploy/pptracking/python/mot_jde_infer.py --model_dir=output_inference/mcfairmot_hrnetv2_w18_dlafpn_30e_1088x608_visdrone --video_file=%s  --save_mot_txts --device=GPU --threshold=%s %s %s' \
-                % (self.file_name, self.confi, self.is_tracking, self.is_draw_line))
+                % (self.model_file_path, self.confi, self.is_tracking, self.is_draw_line))
         endtime = datetime.datetime.now()
         starttime_count = starttime.hour * 3600 + starttime.minute * 60 + starttime.second
         endtime_count = endtime.hour * 3600 + endtime.minute * 60 + endtime.second
