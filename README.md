@@ -41,6 +41,7 @@ paddlepaddle
 **注：**
 
 1. Windows环境下，需要手动下载安装[cython_bbox](https://pypi.org/project/pip/)，然后将setup.py中的找到steup.py, 修改`extra_compile_args=[’-Wno-cpp’]`，替换为`extra_compile_args = {'gcc': ['/Qstd=c99']}`, 然后运行`python setup.py build_ext install`
+2. numpy版本需要大于1.20
 
 ## 3. 启动前端界面
 
